@@ -32,10 +32,6 @@
             <div id="data-stream" class="overflow-hidden font-mono text-[10px] leading-relaxed flex-grow relative text-gray-400">
                 <div class="absolute bottom-0 w-full h-24 bg-gradient-to-t from-[#fafafa] to-transparent pointer-events-none"></div>
             </div>
-            <div class="mt-4 border border-black p-4 hover:bg-black hover:text-white transition-colors cursor-pointer flex justify-between items-center group">
-                <span class="text-[10px] uppercase tracking-widest font-bold">Connect_Wallet</span>
-                <span class="group-hover:translate-x-1 transition-transform">→</span>
-            </div>
         </section>
 
         <section class="lg:col-span-6 relative flex flex-col min-h-0 items-center justify-center">
@@ -156,7 +152,6 @@
 
         async function askGemini(promptText) {
             try {
-                // FIXED FOR VERCEL DEPLOYMENT
                 const response = await fetch('/api/chat', {
                     method: 'POST', headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ promptText })
