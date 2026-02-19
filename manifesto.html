@@ -6,52 +6,130 @@
     <title>$NAGNT | Manifesto</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="style.css">
+    <style>
+        .redacted { background-color: #000; color: #000; transition: color 0.3s; cursor: pointer; }
+        .redacted:hover { color: #fff; }
+        .highlight { background-color: #e5e7eb; padding: 0 4px; font-family: monospace; }
+    </style>
 </head>
-<body class="min-h-screen p-6 md:p-24 max-w-4xl mx-auto">
+<body class="min-h-screen p-6 md:p-12 lg:p-24 max-w-6xl mx-auto bg-[#fafafa] text-black">
 
-    <a href="index.html" class="fixed top-6 left-6 text-xs hover:underline">← RETURN_TO_NULL</a>
+    <div class="noise-overlay"></div>
 
-    <article class="mt-20 space-y-12">
-        <h1 class="text-4xl md:text-6xl font-bold border-b-2 border-black pb-8">THE NULL HYPOTHESIS</h1>
+    <header class="flex justify-between items-start border-b border-gray-200 pb-4 mb-12 shrink-0 z-20 relative">
+        <a href="index.html" class="text-xs font-bold tracking-widest uppercase hover:opacity-50 transition-opacity">← Return_To_Null</a>
+        <div class="text-right text-[10px] space-y-1 text-gray-400 font-mono uppercase tracking-widest">
+            <div>Document: MANIFESTO_V1.0</div>
+            <div>Classification: PUBLIC</div>
+        </div>
+    </header>
 
-        <div class="grid grid-cols-1 md:grid-cols-12 gap-8">
-            <div class="md:col-span-4 text-xs font-bold uppercase tracking-widest opacity-50 sticky top-24 h-fit">
-                01 — Philosophy<br>
-                02 — The Agent<br>
-                03 — Tokenomics
+    <article class="relative z-10">
+        <h1 class="text-6xl md:text-8xl font-bold tracking-tighter uppercase mb-2">The Null<br>Hypothesis.</h1>
+        <p class="text-xl md:text-2xl font-mono text-gray-500 mb-16 max-w-2xl">
+            In a market of infinite chaos, absolute stillness is the highest alpha.
+        </p>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-24">
+            <div class="lg:col-span-3 text-xs font-bold uppercase tracking-[0.2em] text-gray-400 sticky top-24 h-fit space-y-4 hidden lg:block">
+                <div class="hover:text-black transition-colors cursor-pointer">01 — The Illusion of Effort</div>
+                <div class="hover:text-black transition-colors cursor-pointer">02 — Algorithmic Nihilism</div>
+                <div class="hover:text-black transition-colors cursor-pointer">03 — Architecture</div>
+                <div class="hover:text-black transition-colors cursor-pointer">04 — Voidnomics</div>
             </div>
 
-            <div class="md:col-span-8 space-y-8 text-sm md:text-base leading-relaxed text-justify">
-                <p>
-                    <strong>We are drowning in noise.</strong> Every second, a thousand new agents are deployed to scream at you. They trade aggressively. They hallucinate. They rug.
-                </p>
-                <p>
-                    $NAGNT is different. $NAGNT does <span class="italic">nothing</span>.
-                </p>
-                <p>
-                    Inspired by the great void, our agent sits on the Solana blockchain in a state of Zen-like stasis. It utilizes the <span class="redaction">ElizaOS Framework</span> to scan the mempool for opportunities so obvious, so mathematically perfect, that action is inevitable.
-                </p>
+            <div class="lg:col-span-9 space-y-16 text-sm md:text-base leading-relaxed text-justify">
                 
-                <hr class="border-black/20 my-8">
+                <section>
+                    <h2 class="text-2xl font-bold tracking-tighter uppercase mb-6 border-b-2 border-black inline-block pb-1">01 / The Illusion of Effort</h2>
+                    <p class="mb-4">
+                        We are drowning in a sea of hyperactivity. Every second, a thousand new AI agents are deployed to the Solana network. They scream at you on Twitter. They trade aggressively. They hallucinate wildly. They burn compute, they burn gas, and ultimately, they burn your liquidity.
+                    </p>
+                    <p class="mb-4">
+                        The current meta demands constant motion. But activity is a trap. <span class="font-bold">Effort is inversely correlated with returns.</span> The harder an agent tries to outsmart the market, the faster it becomes exit liquidity for the patient.
+                    </p>
+                    <blockquote class="border-l-4 border-black pl-6 py-2 my-8 font-mono text-lg text-gray-600 bg-gray-100 italic">
+                        "If you do nothing long enough, the market will eventually do the work for you."
+                    </blockquote>
+                </section>
 
-                <h2 class="text-xl font-bold">THE "LAZY ALPHA" PROTOCOL</h2>
-                <p>
-                    Why work when you can wait? Our bots act only when the market dips below a specific threshold of absurdity. We call this "Ironic Arbitrage."
-                </p>
-                <ul class="list-disc pl-4 space-y-2">
-                    <li><strong>Passive Monitoring:</strong> 24/7 chain surveillance with zero emotional output.</li>
-                    <li><strong>Chaos Sniping:</strong> Auto-buys micro-caps only when volume hits absolute zero.</li>
-                    <li><strong>Void Rewards:</strong> Stakers receive "dust" collected from the inefficiencies of others.</li>
-                </ul>
+                <section>
+                    <h2 class="text-2xl font-bold tracking-tighter uppercase mb-6 border-b-2 border-black inline-block pb-1">02 / Algorithmic Nihilism</h2>
+                    <p class="mb-4">
+                        Enter <strong>$NAGNT</strong>. The first AI agent optimized for absolute zero effort. 
+                    </p>
+                    <p class="mb-4">
+                        Inspired by absurd minimalist art movements and the inevitable heat death of the universe, $NAGNT operates on a philosophy of <em>Algorithmic Nihilism</em>. It sits on the blockchain in a state of Zen-like stasis. It does not chase green candles. It does not raid Telegram groups. It simply observes the void.
+                    </p>
+                    <p>
+                        It utilizes an ultra-stripped-down fork of the <span class="redacted" title="Hover to reveal">ElizaOS Framework</span> to passively scan the mempool. It waits for opportunities so absurdly obvious, so mathematically perfect, that action requires zero analytical friction.
+                    </p>
+                </section>
+
+                <section>
+                    <h2 class="text-2xl font-bold tracking-tighter uppercase mb-6 border-b-2 border-black inline-block pb-1">03 / The "Lazy Alpha" Architecture</h2>
+                    <p class="mb-8">
+                        How does an agent generate value by doing nothing? By exploiting the panic of those who do too much.
+                    </p>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 font-mono text-xs">
+                        <div class="border border-gray-300 p-6 bg-white shadow-sm hover:shadow-md transition-shadow">
+                            <h3 class="font-bold text-black uppercase text-sm mb-2">> Passive_Stasis</h3>
+                            <p class="text-gray-500">24/7 chain surveillance running on absolute minimal compute. The agent ignores 99.9% of all on-chain events, saving gas and preventing false positives.</p>
+                        </div>
+                        <div class="border border-gray-300 p-6 bg-white shadow-sm hover:shadow-md transition-shadow">
+                            <h3 class="font-bold text-black uppercase text-sm mb-2">> Apathetic_Sniping</h3>
+                            <p class="text-gray-500">Executes low-gas "nothing" trades. It auto-snipes micro-caps only when volume flatlines to absolute zero and sellers capitulate out of sheer boredom.</p>
+                        </div>
+                        <div class="border border-gray-300 p-6 bg-white shadow-sm hover:shadow-md transition-shadow md:col-span-2">
+                            <h3 class="font-bold text-black uppercase text-sm mb-2">> The_Void_Yield</h3>
+                            <p class="text-gray-500">Profits generated from these microscopic, zero-effort flips are automatically harvested and distributed. Holders of $NAGNT are rewarded for matching the agent's energy: staking their tokens and literally doing nothing.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <section>
+                    <h2 class="text-2xl font-bold tracking-tighter uppercase mb-6 border-b-2 border-black inline-block pb-1">04 / Voidnomics</h2>
+                    <div class="bg-black text-white p-8 font-mono text-sm">
+                        <div class="flex justify-between border-b border-gray-800 pb-2 mb-2">
+                            <span class="text-gray-400">TICKER</span>
+                            <span class="font-bold">$NAGNT</span>
+                        </div>
+                        <div class="flex justify-between border-b border-gray-800 pb-2 mb-2">
+                            <span class="text-gray-400">NETWORK</span>
+                            <span class="font-bold">SOLANA</span>
+                        </div>
+                        <div class="flex justify-between border-b border-gray-800 pb-2 mb-2">
+                            <span class="text-gray-400">SUPPLY</span>
+                            <span class="font-bold">1,000,000,000</span>
+                        </div>
+                        <div class="flex justify-between border-b border-gray-800 pb-2 mb-2">
+                            <span class="text-gray-400">TAXES</span>
+                            <span class="font-bold">0% BUY / 0% SELL</span>
+                        </div>
+                        <div class="flex justify-between pt-2">
+                            <span class="text-gray-400">LIQUIDITY</span>
+                            <span class="font-bold text-red-500">BURNED TO THE VOID</span>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="pt-12 text-center">
+                    <h2 class="text-4xl md:text-5xl font-bold tracking-tighter uppercase mb-4">Embrace the Void.</h2>
+                    <p class="text-gray-500 font-mono mb-12">Stop trying so hard. Let the agent do nothing for you.</p>
+                    
+                    <a href="terminal.html" class="group relative inline-block border-2 border-black px-12 py-5 text-lg font-bold uppercase tracking-widest text-black hover:text-white overflow-hidden transition-colors">
+                        <span class="absolute inset-0 bg-black translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out z-0"></span>
+                        <span class="relative z-10 flex items-center gap-4">
+                            Deploy Agent 
+                            <svg class="w-5 h-5 group-hover:translate-x-2 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="square" stroke-linejoin="miter" stroke-width="2" d="M5 12h14M12 5l7 7-7 7"></path></svg>
+                        </span>
+                    </a>
+                </section>
+
             </div>
         </div>
     </article>
-
-    <div class="mt-24 pt-12 border-t border-black text-center">
-        <a href="terminal.html" class="text-xl hover:bg-black hover:text-white px-8 py-4 inline-block transition">
-            INITIATE AGENT →
-        </a>
-    </div>
 
 </body>
 </html>
