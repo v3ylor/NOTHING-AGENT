@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NOTHING ($NAGNT) | TERMINAL</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="flex flex-col p-6 h-screen w-screen bg-[#fafafa]">
+
+    <div class="noise-overlay"></div>
+
+    <header class="flex justify-between items-start border-b border-gray-200 pb-4 mb-6 shrink-0 z-20 relative">
+        <div>
+            <h1 class="text-2xl font-bold tracking-[-0.05em] uppercase text-black">Nothing Agent</h1>
+            <div class="text-[10px] text-gray-400 mt-1 tracking-widest uppercase">
+                Status: <span class="text-black font-bold">Neural Link Established</span>
+            </div>
+        </div>
+        <div class="text-right text-[10px] space-y-1">
+            <div class="uppercase tracking-widest text-black">$NAGNT_PROTOCOL_V1</div>
+            <div class="text-gray-400">SOLANA_MAINNET</div>
+            <div id="clock" class="text-gray-400">00:00:00</div>
+        </div>
+    </header>
+
+    <main class="flex-grow grid grid-cols-1 lg:grid-cols-12 gap-12 overflow-hidden relative z-10 min-h-0">
+
+        <section class="lg:col-span-3 flex flex-col min-h-0 border-r border-gray-200 pr-4">
+            <div class="text-[9px] uppercase tracking-[0.2em] mb-4 text-gray-400 font-bold">Passive_Monitoring_Log</div>
+            <div id="data-stream" class="overflow-hidden font-mono text-[10px] leading-relaxed flex-grow relative text-gray-400">
+                <div class="absolute bottom-0 w-full h-24 bg-gradient-to-t from-[#fafafa] to-transparent pointer-events-none"></div>
+            </div>
+            <div class="mt-4 border border-black p-4 hover:bg-black hover:text-white transition-colors cursor-pointer flex justify-between items-center group">
+                <span class="text-[10px] uppercase tracking-widest font-bold">Connect_Wallet</span>
+                <span class="group-hover:translate-x-1 transition-transform">→</span>
+            </div>
+        </section>
+
+        <section class="lg:col-span-6 relative flex flex-col min-h-0 items-center justify-center">
+            <div class="absolute inset-0 z-0">
+                <canvas id="neuralCanvas" class="w-full h-full block"></canvas>
+            </div>
+            <div class="z-10 text-center pointer-events-none mix-blend-multiply">
+                <h2 class="text-6xl md:text-9xl font-bold text-gray-200 tracking-tighter select-none">NULL</h2>
+                <div id="status-message" class="mt-4 text-[10px] uppercase tracking-[0.5em] text-black px-2 inline-block border border-gray-300 bg-white shadow-sm transition-all duration-300">
+                    AWAITING_INPUT
+                </div>
+            </div>
+        </section>
+
+        <section class="lg:col-span-3 flex flex-col min-h-0 border-l border-gray-200 pl-4">
+            <div class="text-[9px] uppercase tracking-[0.2em] mb-4 text-gray-400 font-bold">Input_Void</div>
+            <div id="cli-output" class="flex-grow overflow-y-auto text-[10px] font-mono space-y-3 pb-2 text-gray-500">
+                <div>> Initializing apathy protocols...</div>
+                <div>> Type a command or ask the void a question.</div>
+                <br>
+            </div>
+            <div class="relative mt-2 shrink-0">
+                <span class="absolute left-0 top-2 text-black font-bold">></span>
+                <input type="text" id="cli-input" class="w-full bg-transparent border-b border-gray-300 py-2 pl-4 outline-none text-xs font-bold uppercase placeholder-gray-300 focus:border-black transition-colors text-black" placeholder="DISTURB THE SILENCE..." autocomplete="off">
+            </div>
+        </section>
+
+    </main>
+
+    <script>
+        // CLOCK
+        setInterval(() => {
+            const now = new Date();
+            document.getElementById('clock').innerText = now.toISOString().split('T')[1].split('.')[0];
+        }, 1000);
+
+        // DATA STREAM
+        const streamContainer = document.getElementById('data-stream');
+        const tasks = ['Scan_Complete: Found_Nothing', 'Opportunity: Ignored', 'Alpha: 0.0000', 'State: Dormant', 'Effort_Level: 0%'];
+        function addStreamLine() {
+            const div = document.createElement('div');
+            const task = tasks[Math.floor(Math.random() * tasks.length)];
+            const hash = Math.random().toString(36).substring(7);
+            div.innerHTML = `<span class="opacity-30">${hash}</span> :: <span class="text-black">${task}</span>`;
+            streamContainer.prepend(div);
+            if(streamContainer.children.length > 20) streamContainer.lastElementChild.remove();
+            setTimeout(addStreamLine, Math.random() * 2000 + 1000);
+        }
+        addStreamLine();
+
+        // MINIMALIST CANVAS
+        const canvas = document.getElementById('neuralCanvas');
+        const ctx = canvas.getContext('2d');
+        let width, height;
+        let particles = [];
+
+        function resize() {
+            width = canvas.width = canvas.parentElement.offsetWidth;
+            height = canvas.height = canvas.parentElement.offsetHeight;
+        }
+        window.addEventListener('resize', resize);
+        setTimeout(resize, 100);
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * width; this.y = Math.random() * height;
+                this.vx = (Math.random() - 0.5) * 0.2; this.vy = (Math.random() - 0.5) * 0.2;
+                this.size = 1.5;
+            }
+            update() {
+                this.x += this.vx; this.y += this.vy;
+                if(this.x < 0 || this.x > width) this.vx *= -1;
+                if(this.y < 0 || this.y > height) this.vy *= -1;
+            }
+            draw() {
+                ctx.fillStyle = '#000000';
+                ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2); ctx.fill();
+            }
+        }
+        for(let i=0; i<40; i++) particles.push(new Particle());
+
+        function animate() {
+            ctx.clearRect(0, 0, width, height); ctx.lineWidth = 0.5;
+            for(let i=0; i<particles.length; i++) {
+                particles[i].update(); particles[i].draw();
+                for(let j=i; j<particles.length; j++) {
+                    let dx = particles[i].x - particles[j].x, dy = particles[i].y - particles[j].y;
+                    let dist = Math.sqrt(dx*dx + dy*dy);
+                    if(dist < 120) {
+                        ctx.strokeStyle = `rgba(0, 0, 0, ${0.1 - (dist/120)*0.1})`;
+                        ctx.beginPath(); ctx.moveTo(particles[i].x, particles[i].y); ctx.lineTo(particles[j].x, particles[j].y); ctx.stroke();
+                    }
+                }
+            }
+            requestAnimationFrame(animate);
+        }
+        animate();
+
+        // BACKEND CONNECTION
+        const cliInput = document.getElementById('cli-input');
+        const cliOutput = document.getElementById('cli-output');
+        const statusMsg = document.getElementById('status-message');
+
+        const commands = {
+            '/help': "commands: /scan (do nothing), /status, or chat.",
+            '/status': "Status: Ideally Idle.",
+            '/scan': "Scanning... Found nothing of value.",
+        };
+
+        function printLog(text, type = 'normal') {
+            const div = document.createElement('div');
+            div.innerHTML = type === 'user' 
+                ? `<span class="opacity-40">></span> <span class="text-black font-bold">${text}</span>` 
+                : `<span class="text-black">${text.replace(/\n/g, '<br>')}</span>`;
+            if(type === 'error') div.innerHTML = `<span class="text-red-500">${text}</span>`;
+            cliOutput.appendChild(div); cliOutput.scrollTop = cliOutput.scrollHeight;
+        }
+
+        async function askGemini(promptText) {
+            try {
+                // FIXED FOR VERCEL DEPLOYMENT
+                const response = await fetch('/api/chat', {
+                    method: 'POST', headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ promptText })
+                });
+                if (!response.ok) throw new Error('Backend Error');
+                const data = await response.json(); return data.reply;
+            } catch (error) {
+                return "Error: The void refuses to answer (Is your Vercel backend running?).";
+            }
+        }
+
+        cliInput.addEventListener('keydown', async (e) => {
+            if (e.key === 'Enter') {
+                const input = cliInput.value.trim();
+                if (!input) return;
+                cliInput.value = ''; printLog(input, 'user');
+                const lowerInput = input.toLowerCase();
+
+                if (commands[lowerInput]) {
+                    setTimeout(() => { printLog(commands[lowerInput], 'system'); }, 300);
+                } else {
+                    statusMsg.innerText = "CONSULTING_THE_VOID...";
+                    statusMsg.classList.add('bg-black', 'text-white');
+                    cliInput.disabled = true; 
+                    particles.forEach(p => { p.vx *= 2; p.vy *= 2; });
+
+                    const aiResponse = await askGemini(input);
+                    printLog(aiResponse, 'system');
+                    
+                    statusMsg.innerText = "AWAITING_INPUT";
+                    statusMsg.classList.remove('bg-black', 'text-white');
+                    cliInput.disabled = false; cliInput.focus();
+                    particles.forEach(p => { p.vx /= 2; p.vy /= 2; });
+                }
+            }
+        });
+    </script>
+</body>
+</html>
