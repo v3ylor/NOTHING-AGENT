@@ -5,7 +5,7 @@ body {
     color: #000 !important;
     font-family: 'Space Mono', monospace;
     margin: 0;
-    overflow: hidden;
+    /* REMOVED: overflow: hidden; so the manifesto can scroll! */
     cursor: crosshair;
 }
 
@@ -17,8 +17,21 @@ body {
     opacity: 0.5;
 }
 
-::selection { background: #000; color: #fff; }
-::-webkit-scrollbar { width: 4px; }
-::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: #e5e5e5; }
-::-webkit-scrollbar-thumb:hover { background: #000; }
+::selection { 
+    background: #000; 
+    color: #fff; 
+}
+
+/* Minimalist Custom Scrollbar */
+::-webkit-scrollbar { 
+    width: 6px; /* Slightly wider so it's easier to grab on the manifesto page */
+}
+::-webkit-scrollbar-track { 
+    background: transparent; 
+}
+::-webkit-scrollbar-thumb { 
+    background: #e5e5e5; 
+}
+::-webkit-scrollbar-thumb:hover { 
+    background: #000; 
+}
