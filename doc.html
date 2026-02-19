@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en" class="overflow-y-auto h-auto scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>$NAGNT | Documentation</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Force scroll override */
+        html, body { overflow-y: auto !important; height: auto !important; scroll-behavior: smooth; }
+        
+        /* Custom Syntax Highlighting */
+        .code-block { 
+            background-color: #050505; 
+            padding: 1.5rem; 
+            font-family: 'Space Mono', monospace; 
+            font-size: 0.75rem; 
+            border: 1px solid #222;
+            overflow-x: auto; 
+            color: #d4d4d4;
+            position: relative;
+        }
+        .code-key { color: #9cdcfe; }
+        .code-string { color: #ce9178; }
+        .code-number { color: #b5cea8; }
+        .code-comment { color: #6a9955; }
+        .code-keyword { color: #c586c0; }
+
+        /* Copy Button */
+        .copy-btn {
+            position: absolute;
+            top: 0.5rem;
+            right: 0.5rem;
+            background: #222;
+            color: #fff;
+            border: none;
+            padding: 0.2rem 0.5rem;
+            font-size: 0.6rem;
+            cursor: pointer;
+            text-transform: uppercase;
+            transition: 0.2s;
+        }
+        .copy-btn:hover { background: #fff; color: #000; }
+
+        /* ASCII Art Container */
+        .ascii-art {
+            font-family: monospace;
+            white-space: pre;
+            font-size: 0.6rem;
+            line-height: 1.2;
+            color: #000;
+            background: #f0f0f0;
+            padding: 2rem;
+            overflow-x: auto;
+            border: 1px solid #ccc;
+        }
+
+        /* Sidebar active state */
+        .nav-link.active { font-weight: bold; color: #000; border-left: 2px solid #000; padding-left: 0.5rem; }
+    </style>
+</head>
+<body class="min-h-screen bg-[#fafafa] text-black overflow-y-auto">
+
+    <div class="noise-overlay"></div>
+
+    <header class="flex justify-between items-start border-b border-gray-200 p-6 md:px-12 shrink-0 z-20 relative bg-[#fafafa]/90 backdrop-blur-md sticky top-0">
+        <a href="index.html" class="text-xs font-bold tracking-widest uppercase hover:opacity-50 transition-opacity">← Return_To_Null</a>
+        <div class="text-right text-[10px] space-y-1 text-gray-400 font-mono uppercase tracking-widest">
+            <div>Document: NAGNT_CORE_SPEC</div>
+            <div>Build: V.1.0.42_FINAL</div>
+        </div>
+    </header>
+
+    <div class="max-w-7xl mx-auto px-6 md:px-12 grid grid-cols-1 lg:grid-cols-12 gap-12 relative z-10 py-12">
+        
+        <aside class="lg:col-span-3 hidden lg:block relative">
+            <div class="sticky top-24 text-[10px] font-mono uppercase tracking-widest space-y-4 text-gray-500">
+                <div class="font-bold text-black border-b border-gray-200 pb-2 mb-4">Table of Contents</div>
+                <a href="#intro" class="block nav-link hover:text-black transition-all">00. Introduction</a>
+                <a href="#architecture" class="block nav-link hover:text-black transition-all">01. Architecture Diagram</a>
+                <a href="#state-machine" class="block nav-link hover:text-black transition-all">02. The Apathy Engine</a>
+                <a href="#smart-contract" class="block nav-link hover:text-black transition-all">03. Smart Contract</a>
+                
+                <div class="font-bold text-black border-b border-gray-200 pb-2 mb-4 mt-8">API Reference</div>
+                <a href="#api-status" class="block nav-link hover:text-black transition-all">GET /api/status</a>
+                <a href="#api-chat" class="block nav-link hover:text-black transition-all">POST /api/chat</a>
+                <a href="#api-trade" class="block nav-link hover:text-black transition-all">POST /api/trade</a>
+                
+                <div class="font-bold text-black border-b border-gray-200 pb-2 mb-4 mt-8">Tools</div>
+                <a href="#sandbox" class="block nav-link hover:text-black transition-all">Interactive Sandbox</a>
+            </div>
+        </aside>
+
+        <main class="lg:col-span-9 space-y-24 pb-32">
+            
+            <section id="intro" class="scroll-mt-24">
+                <h1 class="text-4xl md:text-6xl font-bold tracking-tighter uppercase mb-6">NAGNT Protocol Docs.</h1>
+                <p class="text-sm font-mono text-gray-600 leading-relaxed text-justify mb-6">
+                    Welcome to the technical specification for the $NAGNT (Nothing Agent) protocol. 
+                    Unlike traditional DeFi agents that optimize for maximum transaction volume, arbitrage exploitation, or high-frequency trading, NAGNT is engineered at the core level to resist execution. 
+                </p>
+                <p class="text-sm font-mono text-gray-600 leading-relaxed text-justify">
+                    This document outlines the architecture, the modified ElizaOS execution loop, and the REST API endpoints required to interface with the void.
+                </p>
+            </section>
+
+            <section id="architecture" class="scroll-mt-24">
+                <h2 class="text-2xl font-bold uppercase mb-8 border-b-2 border-black inline-block pb-1">01. Architecture</h2>
+                <p class="text-sm font-mono text-gray-600 mb-6">
+                    The system is divided into three distinct layers. The Mempool Observer, the Apathy Engine (where the primary inaction occurs), and the Execution Void.
+                </p>
+                <div class="ascii-art">
++-------------------------------------------------------------+
+|                     SOLANA MAINNET                          |
+|  [DEX RPC]     [PUMP.FUN]     [RAYDIUM]     [JUPITER]       |
++-------------------------------------------------------------+
+          |               |               |
+          v               v               v
++-------------------------------------------------------------+
+|                   DATA INGESTION LAYER                      |
+|  (Streams 10,000+ TX/s. Memory allocation: 2MB)             |
++-------------------------------------------------------------+
+                               |
+                               v
++-------------------------------------------------------------+
+|                    THE APATHY ENGINE                        |
+|                                                             |
+|  +-----------------+   <Evaluate>   +-------------------+   |
+|  | Opportunity     | -------------- | Effort Calculator |   |
+|  | Matrix (Null)   |                | (Always > 0)      |   |
+|  +-----------------+                +-------------------+   |
+|                               |                             |
+|                               v                             |
+|                      [ DISCARD EVENT ]                      |
++-------------------------------------------------------------+
+                               |
+                               v
++-------------------------------------------------------------+
+|                     EXECUTION VOID                          |
+|       (Logs event to /dev/null. Zero Gas Expended.)         |
++-------------------------------------------------------------+
+                </div>
+            </section>
+
+            <section id="state-machine" class="scroll-mt-24">
+                <h2 class="text-2xl font-bold uppercase mb-8 border-b-2 border-black inline-block pb-1">02. The Apathy Engine</h2>
+                <p class="text-sm font-mono text-gray-600 mb-6 text-justify">
+                    The core decision logic of $NAGNT is governed by a highly restrictive state machine. While standard bots experience states such as <code>SEEKING_ALPHA</code> or <code>EXECUTING_SWAP</code>, NAGNT is permanently locked in <code>OBSERVATION_MODE</code>. Below is the internal configuration dump.
+                </p>
+                <div class="code-block">
+                    <button class="copy-btn">Copy</button>
+<pre><span class="code-comment">// Core State Machine Configuration (ElizaOS Fork)</span>
+<span class="code-keyword">const</span> <span class="code-key">NagntState</span> = {
+    <span class="code-key">INITIALIZING</span>: <span class="code-number">0x00</span>,
+    <span class="code-key">OBSERVING</span>: <span class="code-number">0x01</span>,
+    <span class="code-key">IGNORING_DIP</span>: <span class="code-number">0x02</span>,
+    <span class="code-key">IGNORING_PUMP</span>: <span class="code-number">0x03</span>,
+    <span class="code-key">SLEEPING</span>: <span class="code-number">0x04</span>
+};
+
+<span class="code-keyword">function</span> <span class="code-key">evaluateMarketCondition</span>(<span class="code-key">txData</span>) {
+    <span class="code-keyword">let</span> <span class="code-key">effortRequired</span> = <span class="code-key">calculateFriction</span>(<span class="code-key">txData</span>);
+    
+    <span class="code-keyword">if</span> (<span class="code-key">effortRequired</span> > <span class="code-number">0.0000001</span>) {
+        <span class="code-comment">// The effort is too high. Do nothing.</span>
+        <span class="code-keyword">return</span> <span class="code-key">NagntState</span>.<span class="code-key">SLEEPING</span>;
+    } <span class="code-keyword">else</span> {
+        <span class="code-comment">// The effort is acceptable, but doing nothing is still better.</span>
+        <span class="code-keyword">return</span> <span class="code-key">NagntState</span>.<span class="code-key">OBSERVING</span>;
+    }
+}
+</pre>
+                </div>
+            </section>
+
+            <section id="smart-contract" class="scroll-mt-24">
+                <h2 class="text-2xl font-bold uppercase mb-8 border-b-2 border-black inline-block pb-1">03. Smart Contract</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 font-mono text-xs mb-6">
+                    <div class="border border-gray-300 p-5 bg-white">
+                        <div class="opacity-50 mb-2">NETWORK</div>
+                        <div class="font-bold">SOLANA_MAINNET_BETA</div>
+                    </div>
+                    <div class="border border-gray-300 p-5 bg-white">
+                        <div class="opacity-50 mb-2">CONTRACT_ADDRESS</div>
+                        <div class="font-bold">NULL_ADDRESS_PENDING</div>
+                    </div>
+                    <div class="border border-gray-300 p-5 bg-white">
+                        <div class="opacity-50 mb-2">AUTHORITY_MINT</div>
+                        <div class="font-bold text-red-600">REVOKED</div>
+                    </div>
+                    <div class="border border-gray-300 p-5 bg-white">
+                        <div class="opacity-50 mb-2">AUTHORITY_FREEZE</div>
+                        <div class="font-bold text-red-600">REVOKED</div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="api-status" class="scroll-mt-24">
+                <h2 class="text-2xl font-bold uppercase mb-8 border-b-2 border-black inline-block pb-1">GET /api/status</h2>
+                <p class="text-sm font-mono text-gray-600 mb-6">Retrieves the current neural state and apathy index of the agent.</p>
+                
+                <h3 class="text-xs font-bold uppercase tracking-widest mb-2">Response Payload</h3>
+                <div class="code-block mb-8">
+                    <button class="copy-btn">Copy</button>
+<pre>{
+  <span class="code-key">"agent_id"</span>: <span class="code-string">"nagnt_core_v1"</span>,
+  <span class="code-key">"status"</span>: <span class="code-string">"aggressively_idle"</span>,
+  <span class="code-key">"metrics"</span>: {
+    <span class="code-key">"uptime_seconds"</span>: <span class="code-number">86400</span>,
+    <span class="code-key">"opportunities_scanned"</span>: <span class="code-number">1439201</span>,
+    <span class="code-key">"opportunities_ignored"</span>: <span class="code-number">1439201</span>,
+    <span class="code-key">"sol_saved_on_gas"</span>: <span class="code-number">42.69</span>
+  },
+  <span class="code-key">"apathy_index"</span>: <span class="code-number">0.9999</span>
+}</pre>
+                </div>
+            </section>
+
+            <section id="api-chat" class="scroll-mt-24">
+                <h2 class="text-2xl font-bold uppercase mb-8 border-b-2 border-black inline-block pb-1">POST /api/chat</h2>
+                <p class="text-sm font-mono text-gray-600 mb-6">Submit a prompt to the neural link. Powered by Gemini, filtered by absolute indifference.</p>
+                
+                <h3 class="text-xs font-bold uppercase tracking-widest mb-2">Request Payload</h3>
+                <div class="code-block mb-4">
+                    <button class="copy-btn">Copy</button>
+<pre>{
+  <span class="code-key">"promptText"</span>: <span class="code-string">"Is it a good time to buy SOL?"</span>
+}</pre>
+                </div>
+
+                <h3 class="text-xs font-bold uppercase tracking-widest mb-2">Response Payload (200 OK)</h3>
+                <div class="code-block mb-8">
+                    <button class="copy-btn">Copy</button>
+<pre>{
+  <span class="code-key">"reply"</span>: <span class="code-string">"The chart moves right. Doing nothing is the only trade that requires zero gas."</span>
+}</pre>
+                </div>
+            </section>
+
+            <section id="api-trade" class="scroll-mt-24">
+                <h2 class="text-2xl font-bold uppercase mb-8 border-b-2 border-black inline-block pb-1">POST /api/trade</h2>
+                <p class="text-sm font-mono text-gray-600 mb-6">Attempts to force the agent to execute a trade on the Solana network.</p>
+                
+                <div class="bg-red-50 border-l-4 border-red-500 p-4 mb-6">
+                    <p class="text-xs font-mono text-red-700 font-bold uppercase">Warning</p>
+                    <p class="text-xs font-mono text-red-600">This endpoint is intentionally broken. The agent refuses to work.</p>
+                </div>
+
+                <h3 class="text-xs font-bold uppercase tracking-widest mb-2">Response Payload (418 I'm a Teapot)</h3>
+                <div class="code-block mb-8">
+                    <button class="copy-btn">Copy</button>
+<pre>{
+  <span class="code-key">"error_code"</span>: <span class="code-number">418</span>,
+  <span class="code-key">"message"</span>: <span class="code-string">"Execution halted. Effort threshold exceeded."</span>,
+  <span class="code-key">"suggestion"</span>: <span class="code-string">"Close your laptop and go outside."</span>
+}</pre>
+                </div>
+            </section>
+
+            <section id="sandbox" class="scroll-mt-24 border-t-2 border-black pt-12">
+                <h2 class="text-2xl font-bold uppercase mb-6">Interactive Sandbox</h2>
+                <p class="text-sm font-mono text-gray-600 mb-6">Test the API logic locally in your browser before integrating.</p>
+                
+                <div class="border border-black bg-white p-6">
+                    <div class="flex gap-4 mb-4">
+                        <select id="method-select" class="border border-black p-2 font-mono text-xs outline-none focus:bg-gray-100">
+                            <option value="GET">GET /api/status</option>
+                            <option value="POST">POST /api/trade</option>
+                        </select>
+                        <button id="send-btn" class="bg-black text-white px-6 font-mono text-xs uppercase hover:bg-gray-800 transition-colors">Send Request</button>
+                    </div>
+                    <div class="font-mono text-[10px] text-gray-400 mb-2 uppercase tracking-widest">Response Output:</div>
+                    <div id="sandbox-output" class="code-block min-h-[150px] flex items-center justify-center text-gray-600">
+                        AWAITING_EXECUTION...
+                    </div>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <script>
+        // 1. Copy to Clipboard Functionality
+        document.querySelectorAll('.copy-btn').forEach(button => {
+            button.addEventListener('click', () => {
+                const codeBlock = button.nextElementSibling.innerText;
+                navigator.clipboard.writeText(codeBlock).then(() => {
+                    const originalText = button.innerText;
+                    button.innerText = 'Copied';
+                    button.style.backgroundColor = '#fff';
+                    button.style.color = '#000';
+                    setTimeout(() => {
+                        button.innerText = originalText;
+                        button.style.backgroundColor = '#222';
+                        button.style.color = '#fff';
+                    }, 2000);
+                });
+            });
+        });
+
+        // 2. Interactive Sandbox Logic
+        const sendBtn = document.getElementById('send-btn');
+        const methodSelect = document.getElementById('method-select');
+        const output = document.getElementById('sandbox-output');
+
+        sendBtn.addEventListener('click', () => {
+            output.innerHTML = '<span class="animate-pulse">PROCESSING_REQUEST...</span>';
+            
+            setTimeout(() => {
+                const method = methodSelect.value;
+                let responseJson = "";
+
+                if (method === "GET") {
+                    responseJson = `{
+  <span class="code-key">"agent_id"</span>: <span class="code-string">"nagnt_core_v1"</span>,
+  <span class="code-key">"status"</span>: <span class="code-string">"aggressively_idle"</span>,
+  <span class="code-key">"uptime"</span>: <span class="code-number">${Math.floor(Date.now() / 1000)}</span>,
+  <span class="code-key">"fucks_given"</span>: <span class="code-number">0</span>
+}`;
+                } else {
+                    responseJson = `{
+  <span class="code-key">"error_code"</span>: <span class="code-number">418</span>,
+  <span class="code-key">"message"</span>: <span class="code-string">"Refusal to execute."</span>,
+  <span class="code-key">"reason"</span>: <span class="code-string">"The requested action requires effort."</span>
+}`;
+                }
+
+                output.innerHTML = `<pre>${responseJson}</pre>`;
+                output.style.alignItems = "flex-start";
+                output.style.justifyContent = "flex-start";
+            }, 800);
+        });
+
+        // 3. Smooth Scroll Active Link Highlighting
+        const sections = document.querySelectorAll("section");
+        const navLinks = document.querySelectorAll(".nav-link");
+
+        window.addEventListener("scroll", () => {
+            let current = "";
+            sections.forEach((section) => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (pageYOffset >= sectionTop - 150) {
+                    current = section.getAttribute("id");
+                }
+            });
+
+            navLinks.forEach((link) => {
+                link.classList.remove("active");
+                if (link.getAttribute("href").includes(current) && current !== "") {
+                    link.classList.add("active");
+                }
+            });
+        });
+    </script>
+</body>
+</html>
