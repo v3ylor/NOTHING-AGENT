@@ -7,7 +7,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="style.css">
 </head>
-<body class="flex flex-col p-6 h-screen w-screen bg-[#fafafa]">
+<body class="flex flex-col p-6 h-screen w-screen bg-[#fafafa] overflow-hidden">
 
     <div class="noise-overlay"></div>
 
@@ -25,24 +25,24 @@
         </div>
     </header>
 
-    <main class="flex-grow grid grid-cols-1 lg:grid-cols-12 gap-12 overflow-hidden relative z-10 min-h-0">
+    <main class="flex-grow grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 overflow-hidden relative z-10 min-h-0">
 
-        <section class="lg:col-span-3 flex flex-col justify-end min-h-0 lg:border-r border-gray-200 pr-4 pb-2">
+        <section class="lg:col-span-3 flex flex-col justify-end min-h-0 lg:border-r border-gray-200 pr-4 pb-2 order-2 lg:order-1 hidden lg:flex">
             <div class="text-[9px] uppercase tracking-[0.2em] mb-4 text-gray-400 font-bold">System_Metrics</div>
             <div class="font-mono text-[10px] text-gray-400 space-y-2">
                  <div class="flex justify-between"><span>Uptime:</span> <span class="text-black">∞</span></div>
-                 <div class="flex justify-between"><span>Effort_Level:</span> <span class="text-black">0.00%</span></div>
-                 <div class="flex justify-between"><span>Alpha_Detected:</span> <span class="text-black">NULL</span></div>
-                 <div class="flex justify-between"><span>State:</span> <span class="text-black">Aggressively Idle</span></div>
+                 <div class="flex justify-between"><span>Effort:</span> <span class="text-black">0.00%</span></div>
+                 <div class="flex justify-between"><span>Alpha:</span> <span class="text-black">NULL</span></div>
+                 <div class="flex justify-between"><span>State:</span> <span class="text-black">Idle</span></div>
             </div>
         </section>
 
-        <section class="lg:col-span-6 relative flex flex-col min-h-0 items-center justify-center border-y lg:border-y-0 border-gray-100 py-8 lg:py-0">
-            <div class="absolute inset-0 z-0">
+        <section class="lg:col-span-6 relative flex flex-col min-h-[40vh] lg:min-h-0 items-center justify-center border-y lg:border-y-0 border-gray-100 py-8 lg:py-0 order-1 lg:order-2">
+            <div id="canvas-container" class="absolute inset-0 z-0 w-full h-full">
                 <canvas id="neuralCanvas" class="w-full h-full block"></canvas>
             </div>
-            <div class="z-10 text-center pointer-events-none mix-blend-multiply">
-                <h1 class="text-6xl md:text-9xl font-bold tracking-tighter text-black select-none">
+            <div class="z-10 text-center pointer-events-none mix-blend-multiply select-none">
+                <h1 class="text-6xl md:text-9xl font-bold tracking-tighter text-black">
                     NOTHING.
                 </h1>
                 <div class="mt-6 inline-block">
@@ -53,7 +53,7 @@
             </div>
         </section>
 
-        <section class="lg:col-span-3 flex flex-col justify-end min-h-0 lg:border-l border-gray-200 pl-4 pb-2">
+        <section class="lg:col-span-3 flex flex-col lg:justify-end min-h-0 lg:border-l border-gray-200 pl-4 pb-2 order-3">
             <div class="text-[9px] uppercase tracking-[0.2em] mb-4 text-gray-400 font-bold">Navigation_Protocol</div>
             <div class="space-y-3">
                 <a href="manifesto.html" class="block border border-black p-3 hover:bg-black hover:text-white transition-all duration-300 cursor-pointer group">
@@ -79,66 +79,73 @@
     </footer>
 
     <script>
-        // BLOCK SIMULATOR (Kept from original index)
+        // BLOCK SIM
         setInterval(() => {
             document.getElementById('block-sim').innerText = Math.floor(Math.random() * 900000000) + 500000000;
         }, 1500);
 
-        // --- CANVAS ANIMATION SCRIPT (Copied from terminal.html) ---
+        // --- FADED BLACK NEURAL CANVAS ---
         const canvas = document.getElementById('neuralCanvas');
-        const ctx = canvas.getContext('2d');
-        let width, height;
-        let particles = [];
+        const container = document.getElementById('canvas-container');
+        
+        if (canvas && container) {
+            const ctx = canvas.getContext('2d');
+            let width, height;
+            let particles = [];
 
-        function resize() {
-            // Ensure parent element exists before calculating size
-            if (canvas.parentElement) {
-                width = canvas.width = canvas.parentElement.offsetWidth;
-                height = canvas.height = canvas.parentElement.offsetHeight;
+            function resize() {
+                width = canvas.width = container.offsetWidth;
+                height = canvas.height = container.offsetHeight;
             }
-        }
-        window.addEventListener('resize', resize);
-        // Slight delay to ensure layout is settled
-        setTimeout(resize, 100);
+            
+            // Initial resize and listener
+            window.addEventListener('resize', resize);
+            resize(); 
 
-        class Particle {
-            constructor() {
-                this.x = Math.random() * width; this.y = Math.random() * height;
-                this.vx = (Math.random() - 0.5) * 0.2; this.vy = (Math.random() - 0.5) * 0.2;
-                this.size = 1.5;
-            }
-            update() {
-                this.x += this.vx; this.y += this.vy;
-                if(this.x < 0 || this.x > width) this.vx *= -1;
-                if(this.y < 0 || this.y > height) this.vy *= -1;
-            }
-            draw() {
-                ctx.fillStyle = '#000000';
-                ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2); ctx.fill();
-            }
-        }
-        // Reduced particle count slightly for the index page for a cleaner look
-        for(let i=0; i<35; i++) particles.push(new Particle());
-
-        function animate() {
-            ctx.clearRect(0, 0, width, height); ctx.lineWidth = 0.5;
-            for(let i=0; i<particles.length; i++) {
-                particles[i].update(); particles[i].draw();
-                for(let j=i; j<particles.length; j++) {
-                    let dx = particles[i].x - particles[j].x, dy = particles[i].y - particles[j].y;
-                    let dist = Math.sqrt(dx*dx + dy*dy);
-                    if(dist < 120) {
-                        ctx.strokeStyle = `rgba(0, 0, 0, ${0.1 - (dist/120)*0.1})`;
-                        ctx.beginPath(); ctx.moveTo(particles[i].x, particles[i].y); ctx.lineTo(particles[j].x, particles[j].y); ctx.stroke();
-                    }
+            class Particle {
+                constructor() {
+                    this.x = Math.random() * width; this.y = Math.random() * height;
+                    this.vx = (Math.random() - 0.5) * 0.2; this.vy = (Math.random() - 0.5) * 0.2;
+                    this.size = 1.5;
+                }
+                update() {
+                    this.x += this.vx; this.y += this.vy;
+                    if(this.x < 0 || this.x > width) this.vx *= -1;
+                    if(this.y < 0 || this.y > height) this.vy *= -1;
+                }
+                draw() {
+                    // FADED BLACK COLOR (rgba 0,0,0, 0.4 opacity)
+                    ctx.fillStyle = 'rgba(0, 0, 0, 0.4)';
+                    ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2); ctx.fill();
                 }
             }
-            requestAnimationFrame(animate);
+
+            // Increased particle count slightly for visibility
+            for(let i=0; i<45; i++) particles.push(new Particle());
+
+            function animate() {
+                ctx.clearRect(0, 0, width, height); ctx.lineWidth = 0.5;
+                for(let i=0; i<particles.length; i++) {
+                    particles[i].update(); particles[i].draw();
+                    for(let j=i; j<particles.length; j++) {
+                        let dx = particles[i].x - particles[j].x, dy = particles[i].y - particles[j].y;
+                        let dist = Math.sqrt(dx*dx + dy*dy);
+                        if(dist < 120) {
+                            // FADED BLACK LINES (starts at 0.2 opacity and fades out)
+                            ctx.strokeStyle = `rgba(0, 0, 0, ${0.2 - (dist/120)*0.2})`;
+                            ctx.beginPath(); ctx.moveTo(particles[i].x, particles[i].y); ctx.lineTo(particles[j].x, particles[j].y); ctx.stroke();
+                        }
+                    }
+                }
+                requestAnimationFrame(animate);
+            }
+
+            // Small delay to ensure layout is settled before starting animation frame loop
+            setTimeout(() => {
+                resize();
+                animate();
+            }, 100);
         }
-        // Ensure width/height are set before starting animation loop
-        setTimeout(() => {
-             if (width && height) animate();
-        }, 150);
     </script>
 </body>
 </html>
