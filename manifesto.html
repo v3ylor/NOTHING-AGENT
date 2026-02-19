@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="overflow-y-auto h-auto">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,12 +7,17 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="style.css">
     <style>
+        /* Force scroll override in case style.css is locking the body */
+        html, body {
+            overflow-y: auto !important;
+            height: auto !important;
+        }
         .redacted { background-color: #000; color: #000; transition: color 0.3s; cursor: pointer; }
         .redacted:hover { color: #fff; }
         .highlight { background-color: #e5e7eb; padding: 0 4px; font-family: monospace; }
     </style>
 </head>
-<body class="min-h-screen p-6 md:p-12 lg:p-24 max-w-6xl mx-auto bg-[#fafafa] text-black">
+<body class="min-h-screen p-6 md:p-12 lg:p-24 max-w-6xl mx-auto bg-[#fafafa] text-black overflow-y-auto">
 
     <div class="noise-overlay"></div>
 
@@ -24,7 +29,7 @@
         </div>
     </header>
 
-    <article class="relative z-10">
+    <article class="relative z-10 pb-24">
         <h1 class="text-6xl md:text-8xl font-bold tracking-tighter uppercase mb-2">The Null<br>Hypothesis.</h1>
         <p class="text-xl md:text-2xl font-mono text-gray-500 mb-16 max-w-2xl">
             In a market of infinite chaos, absolute stillness is the highest alpha.
