@@ -121,73 +121,193 @@
                 </div>
             </div>
 
-            <div id="tab-issues" class="tab-content hidden space-y-4 font-mono text-sm">
-                <div class="border border-gray-300 bg-white p-4 hover:bg-gray-50 transition-colors">
-                    <div class="flex items-start gap-3">
-                        <span class="text-green-500 mt-1">⊙</span>
-                        <div>
-                            <h3 class="font-bold text-black text-base">Agent fell asleep during a high-volatility event</h3>
-                            <div class="text-xs text-gray-400 mt-1">#102 opened 2 days ago by <span class="text-gray-600">sweaty_trader</span></div>
-                            <div class="mt-2 text-xs">
-                                <span class="bg-red-100 text-red-600 border border-red-200 px-2 py-0.5 rounded-full mr-2">critical</span>
-                                <span class="bg-gray-100 text-gray-600 border border-gray-200 px-2 py-0.5 rounded-full">wontfix</span>
-                            </div>
-                        </div>
+            <div id="tab-issues" class="tab-content hidden font-mono text-sm">
+                <div class="flex justify-between items-center text-xs text-gray-500 bg-gray-100 p-3 border border-gray-300 mb-0 rounded-t border-b-0">
+                    <div>
+                        <span class="font-bold text-black">11 Open</span> • <span class="text-gray-400">92 Closed</span>
                     </div>
                 </div>
 
-                <div class="border border-gray-300 bg-white p-4 hover:bg-gray-50 transition-colors">
-                    <div class="flex items-start gap-3">
-                        <span class="text-purple-500 mt-1">⊘</span>
-                        <div>
-                            <h3 class="font-bold text-black text-base line-through text-gray-400">Please do something. Anything.</h3>
-                            <div class="text-xs text-gray-400 mt-1">#98 closed last week by <span class="text-black font-bold">nagnt-bot</span></div>
-                            <div class="mt-2 text-xs text-gray-500 italic">
-                                "Resolution: No."
+                <div class="border border-gray-300 bg-white shadow-sm flex flex-col">
+                    
+                    <div class="p-4 hover:bg-gray-50 border-b border-gray-100 transition-colors">
+                        <div class="flex items-start gap-3">
+                            <span class="text-green-500 mt-1">⊙</span>
+                            <div>
+                                <h3 class="font-bold text-black text-base">Agent fell asleep during a high-volatility event</h3>
+                                <div class="text-xs text-gray-400 mt-1">#102 opened 2 days ago by <span class="text-gray-600">sweaty_trader</span></div>
+                                <div class="mt-2 text-xs">
+                                    <span class="bg-red-100 text-red-600 border border-red-200 px-2 py-0.5 rounded-full mr-2">critical</span>
+                                </div>
                             </div>
                         </div>
                     </div>
+
+                    <div class="p-4 hover:bg-gray-50 border-b border-gray-100 transition-colors">
+                        <div class="flex items-start gap-3">
+                            <span class="text-green-500 mt-1">⊙</span>
+                            <div>
+                                <h3 class="font-bold text-black text-base">Error: Cannot read properties of undefined (reading 'motivation')</h3>
+                                <div class="text-xs text-gray-400 mt-1">#101 opened 3 days ago by <span class="text-gray-600">debug_master</span></div>
+                                <div class="mt-2 text-xs">
+                                    <span class="bg-yellow-100 text-yellow-700 border border-yellow-200 px-2 py-0.5 rounded-full mr-2">bug</span>
+                                    <span class="bg-gray-100 text-gray-600 border border-gray-200 px-2 py-0.5 rounded-full">expected behavior</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="p-4 hover:bg-gray-50 border-b border-gray-100 transition-colors">
+                        <div class="flex items-start gap-3">
+                            <span class="text-purple-500 mt-1">⊘</span>
+                            <div>
+                                <h3 class="font-bold text-black text-base line-through text-gray-400">Please do something. Anything.</h3>
+                                <div class="text-xs text-gray-400 mt-1">#98 closed last week by <span class="text-black font-bold">nagnt-bot</span></div>
+                                <div class="mt-2 text-xs text-gray-500 italic">
+                                    "Resolution: No."
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="p-4 hover:bg-gray-50 border-b border-gray-100 transition-colors">
+                        <div class="flex items-start gap-3">
+                            <span class="text-green-500 mt-1">⊙</span>
+                            <div>
+                                <h3 class="font-bold text-black text-base">Implement MEV sandwich protection</h3>
+                                <div class="text-xs text-gray-400 mt-1">#45 opened 3 months ago by <span class="text-gray-600">audit_guy</span></div>
+                                <div class="mt-2 text-xs">
+                                    <span class="bg-blue-100 text-blue-600 border border-blue-200 px-2 py-0.5 rounded-full">enhancement</span>
+                                    <span class="bg-gray-100 text-gray-600 border border-gray-200 px-2 py-0.5 rounded-full ml-2">too much work</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="p-4 hover:bg-gray-50 border-b border-gray-100 transition-colors">
+                        <div class="flex items-start gap-3">
+                            <span class="text-purple-500 mt-1">⊘</span>
+                            <div>
+                                <h3 class="font-bold text-black text-base line-through text-gray-400">Add Pump.fun bonding curve integration</h3>
+                                <div class="text-xs text-gray-400 mt-1">#22 closed 5 months ago by <span class="text-black font-bold">nagnt-bot</span></div>
+                                <div class="mt-2 text-xs text-gray-500 italic">
+                                    "Closed due to extreme exhaustion."
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="p-4 hover:bg-gray-50 transition-colors">
+                        <div class="flex items-start gap-3">
+                            <span class="text-green-500 mt-1">⊙</span>
+                            <div>
+                                <h3 class="font-bold text-black text-base">Emergency withdraw function missing</h3>
+                                <div class="text-xs text-gray-400 mt-1">#14 opened 6 months ago by <span class="text-gray-600">panicking_investor</span></div>
+                                <div class="mt-2 text-xs">
+                                    <span class="bg-gray-100 text-gray-600 border border-gray-200 px-2 py-0.5 rounded-full mr-2">wontfix</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
 
-                <div class="border border-gray-300 bg-white p-4 hover:bg-gray-50 transition-colors">
-                    <div class="flex items-start gap-3">
-                        <span class="text-green-500 mt-1">⊙</span>
-                        <div>
-                            <h3 class="font-bold text-black text-base">Implement MEV sandwich protection</h3>
-                            <div class="text-xs text-gray-400 mt-1">#45 opened 3 months ago by <span class="text-gray-600">audit_guy</span></div>
-                            <div class="mt-2 text-xs">
-                                <span class="bg-blue-100 text-blue-600 border border-blue-200 px-2 py-0.5 rounded-full">enhancement</span>
-                            </div>
-                        </div>
-                    </div>
+                <div class="mt-6 flex justify-center items-center gap-1 text-xs text-gray-500">
+                    <span class="px-3 py-1 border border-transparent text-gray-300 cursor-not-allowed">Previous</span>
+                    <span class="px-3 py-1 bg-black text-white rounded">1</span>
+                    <span class="px-3 py-1 hover:bg-gray-200 rounded cursor-pointer transition-colors">2</span>
+                    <span class="px-3 py-1 hover:bg-gray-200 rounded cursor-pointer transition-colors">3</span>
+                    <span class="px-3 py-1 hover:bg-gray-200 rounded cursor-pointer transition-colors">4</span>
+                    <span class="px-3 py-1 hover:bg-gray-200 rounded cursor-pointer transition-colors">...</span>
+                    <span class="px-3 py-1 hover:bg-gray-200 rounded cursor-pointer transition-colors">11</span>
+                    <span class="px-3 py-1 hover:text-black cursor-pointer transition-colors">Next</span>
                 </div>
             </div>
 
-            <div id="tab-prs" class="tab-content hidden space-y-4 font-mono text-sm">
-                <div class="border border-gray-300 bg-white p-4 hover:bg-gray-50 transition-colors">
-                    <div class="flex items-start gap-3">
-                        <span class="text-green-500 mt-1">⎇</span>
-                        <div>
-                            <h3 class="font-bold text-black text-base">feat: Add basic wallet connectivity</h3>
-                            <div class="text-xs text-gray-400 mt-1">#104 opened 5 hours ago by <span class="text-gray-600">helpful_dev</span></div>
-                            <div class="mt-2 text-xs text-gray-500">
-                                1 commit • 45 lines changed
-                            </div>
-                        </div>
+            <div id="tab-prs" class="tab-content hidden font-mono text-sm">
+                
+                <div class="flex justify-between items-center text-xs text-gray-500 bg-gray-100 p-3 border border-gray-300 mb-0 rounded-t border-b-0">
+                    <div>
+                        <span class="font-bold text-black">4 Open</span> • <span class="text-gray-400">38 Closed</span>
                     </div>
                 </div>
 
-                <div class="border border-gray-300 bg-white p-4 hover:bg-gray-50 transition-colors opacity-60">
-                    <div class="flex items-start gap-3">
-                        <span class="text-red-500 mt-1">✕</span>
-                        <div>
-                            <h3 class="font-bold text-black text-base line-through">feat: Aggressive sniper integration</h3>
-                            <div class="text-xs text-gray-400 mt-1">#99 closed 2 weeks ago by <span class="text-black font-bold">nagnt-bot</span></div>
-                            <div class="mt-2 text-xs text-red-600 italic">
-                                Rejected: Too sweaty.
+                <div class="border border-gray-300 bg-white shadow-sm flex flex-col">
+                    
+                    <div class="p-4 hover:bg-gray-50 border-b border-gray-100 transition-colors">
+                        <div class="flex items-start gap-3">
+                            <span class="text-green-500 mt-1">⎇</span>
+                            <div>
+                                <h3 class="font-bold text-black text-base">feat: Add basic wallet connectivity</h3>
+                                <div class="text-xs text-gray-400 mt-1">#104 opened 5 hours ago by <span class="text-gray-600">helpful_dev</span></div>
+                                <div class="mt-2 text-xs text-gray-500">
+                                    1 commit • <span class="text-green-500">+45</span> <span class="text-red-500">-2</span>
+                                </div>
                             </div>
                         </div>
                     </div>
+
+                    <div class="p-4 hover:bg-gray-50 border-b border-gray-100 transition-colors opacity-60">
+                        <div class="flex items-start gap-3">
+                            <span class="text-red-500 mt-1">✕</span>
+                            <div>
+                                <h3 class="font-bold text-black text-base line-through">feat: Aggressive sniper integration</h3>
+                                <div class="text-xs text-gray-400 mt-1">#99 closed 2 weeks ago by <span class="text-black font-bold">nagnt-bot</span></div>
+                                <div class="mt-2 text-xs text-red-600 italic">
+                                    Rejected: Too sweaty. Code requires effort.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="p-4 hover:bg-gray-50 border-b border-gray-100 transition-colors">
+                        <div class="flex items-start gap-3">
+                            <span class="text-green-500 mt-1">⎇</span>
+                            <div>
+                                <h3 class="font-bold text-black text-base">docs: Translate README to Chinese</h3>
+                                <div class="text-xs text-gray-400 mt-1">#88 opened 1 month ago by <span class="text-gray-600">translator_anon</span></div>
+                                <div class="mt-2 text-xs text-gray-500">
+                                    Pending Review (Ignored)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="p-4 hover:bg-gray-50 border-b border-gray-100 transition-colors opacity-60">
+                        <div class="flex items-start gap-3">
+                            <span class="text-purple-500 mt-1">⎇</span>
+                            <div>
+                                <h3 class="font-bold text-black text-base line-through">refactor: implement active trading logic</h3>
+                                <div class="text-xs text-gray-400 mt-1">#62 merged 3 months ago by <span class="text-black font-bold">nagnt-bot</span></div>
+                                <div class="mt-2 text-xs text-purple-600 italic">
+                                    Merged, then instantly reverted because it broke the apathy engine.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="p-4 hover:bg-gray-50 transition-colors">
+                        <div class="flex items-start gap-3">
+                            <span class="text-green-500 mt-1">⎇</span>
+                            <div>
+                                <h3 class="font-bold text-black text-base">fix: wake the agent up</h3>
+                                <div class="text-xs text-gray-400 mt-1">#50 opened 4 months ago by <span class="text-gray-600">concerned_holder</span></div>
+                                <div class="mt-2 text-xs">
+                                    <span class="bg-red-100 text-red-600 border border-red-200 px-2 py-0.5 rounded-full mr-2">do not merge</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="mt-6 flex justify-center items-center gap-1 text-xs text-gray-500">
+                    <span class="px-3 py-1 border border-transparent text-gray-300 cursor-not-allowed">Previous</span>
+                    <span class="px-3 py-1 bg-black text-white rounded">1</span>
+                    <span class="px-3 py-1 hover:bg-gray-200 rounded cursor-pointer transition-colors">2</span>
+                    <span class="px-3 py-1 hover:bg-gray-200 rounded cursor-pointer transition-colors">3</span>
+                    <span class="px-3 py-1 hover:bg-gray-200 rounded cursor-pointer transition-colors">4</span>
+                    <span class="px-3 py-1 hover:text-black cursor-pointer transition-colors">Next</span>
                 </div>
             </div>
 
@@ -244,19 +364,14 @@
 
     <script>
         function switchTab(tabId) {
-            // Hide all contents
             document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
-            
-            // Show the selected content
             document.getElementById(tabId).classList.remove('hidden');
 
-            // Reset all buttons to gray
             document.querySelectorAll('.tab-btn').forEach(btn => {
                 btn.classList.remove('text-black', 'border-black', 'border-b-2');
                 btn.classList.add('text-gray-400');
             });
 
-            // Highlight the active button
             const activeBtn = document.getElementById(tabId.replace('tab-', 'btn-'));
             activeBtn.classList.remove('text-gray-400');
             activeBtn.classList.add('text-black', 'border-black', 'border-b-2');
