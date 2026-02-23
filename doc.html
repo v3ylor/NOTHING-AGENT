@@ -80,7 +80,10 @@
                 <a href="#intro" class="block nav-link hover:text-black transition-all">00. Introduction</a>
                 <a href="#architecture" class="block nav-link hover:text-black transition-all">01. Architecture Diagram</a>
                 <a href="#state-machine" class="block nav-link hover:text-black transition-all">02. The Apathy Engine</a>
-                <a href="#smart-contract" class="block nav-link hover:text-black transition-all">03. Smart Contract</a>
+                <a href="#tokenomics" class="block nav-link hover:text-black transition-all">03. Tokenomics</a>
+                <a href="#governance" class="block nav-link hover:text-black transition-all">04. Governance (DAO)</a>
+                <a href="#security" class="block nav-link hover:text-black transition-all">05. Security & Audits</a>
+                <a href="#smart-contract" class="block nav-link hover:text-black transition-all">06. Smart Contract</a>
                 
                 <div class="font-bold text-black border-b border-gray-200 pb-2 mb-4 mt-8">API Reference</div>
                 <a href="#api-status" class="block nav-link hover:text-black transition-all">GET /api/status</a>
@@ -118,7 +121,7 @@
           |               |               |
           v               v               v
 +-------------------------------------------------------------+
-|                   DATA INGESTION LAYER                      |
+|                  DATA INGESTION LAYER                       |
 |  (Streams 10,000+ TX/s. Memory allocation: 2MB)             |
 +-------------------------------------------------------------+
                                |
@@ -137,7 +140,7 @@
                                |
                                v
 +-------------------------------------------------------------+
-|                     EXECUTION VOID                          |
+|                    EXECUTION VOID                           |
 |       (Logs event to /dev/null. Zero Gas Expended.)         |
 +-------------------------------------------------------------+
                 </div>
@@ -174,16 +177,81 @@
                 </div>
             </section>
 
+            <section id="tokenomics" class="scroll-mt-24">
+                <h2 class="text-2xl font-bold uppercase mb-8 border-b-2 border-black inline-block pb-1">03. Tokenomics</h2>
+                <p class="text-sm font-mono text-gray-600 mb-6 text-justify">
+                    $NAGNT represents a fractionalized share in absolute market indifference. The tokenomics are designed to be as frictionless and uninteresting as possible to prevent excessive dopamine generation.
+                </p>
+                <ul class="list-none space-y-4 font-mono text-xs text-gray-600 border border-gray-200 p-6 bg-white">
+                    <li class="flex justify-between border-b border-gray-100 pb-2">
+                        <span class="font-bold text-black uppercase tracking-widest">Total Supply</span>
+                        <span>1,000,000,000 $NAGNT</span>
+                    </li>
+                    <li class="flex justify-between border-b border-gray-100 pb-2">
+                        <span class="font-bold text-black uppercase tracking-widest">Buy/Sell Tax</span>
+                        <span>0%</span>
+                    </li>
+                    <li class="flex justify-between border-b border-gray-100 pb-2">
+                        <span class="font-bold text-black uppercase tracking-widest">Liquidity</span>
+                        <span>100% Burned (Too lazy to manage)</span>
+                    </li>
+                    <li class="flex justify-between">
+                        <span class="font-bold text-black uppercase tracking-widest">Staking Utility</span>
+                        <span>Stake to earn literal dust</span>
+                    </li>
+                </ul>
+            </section>
+
+            <section id="governance" class="scroll-mt-24">
+                <h2 class="text-2xl font-bold uppercase mb-8 border-b-2 border-black inline-block pb-1">04. Governance (DAO)</h2>
+                <p class="text-sm font-mono text-gray-600 mb-6 text-justify">
+                    The Nothing Agent is governed by a decentralized autonomous organization built on the principles of <strong>"Proof of Apathy" (PoA)</strong>. 
+                </p>
+                <div class="border-l-4 border-black pl-6 py-2 my-6">
+                    <p class="font-mono text-sm text-black font-bold">Proposal Execution Protocol:</p>
+                    <ol class="font-mono text-xs text-gray-600 mt-2 space-y-2 list-decimal list-inside">
+                        <li>Users stake 100,000 $NAGNT to submit a formal protocol upgrade.</li>
+                        <li>The DAO votes over a 7-day epoch.</li>
+                        <li>If the proposal passes, the Agent receives the payload.</li>
+                        <li>The Agent immediately drops the payload and goes back to sleep.</li>
+                    </ol>
+                </div>
+            </section>
+
+            <section id="security" class="scroll-mt-24">
+                <h2 class="text-2xl font-bold uppercase mb-8 border-b-2 border-black inline-block pb-1">05. Security & Audits</h2>
+                <p class="text-sm font-mono text-gray-600 mb-6 text-justify">
+                    The $NAGNT protocol boasts a flawless security record, primarily due to the fact that it possesses no attack vectors because it executes zero logic.
+                </p>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 font-mono text-xs text-center">
+                    <div class="border border-gray-200 p-6 bg-white hover:border-black transition-colors">
+                        <div class="text-3xl mb-2">🛡️</div>
+                        <div class="font-bold text-black uppercase mb-1">Reentrancy</div>
+                        <div class="text-gray-400">Impossible. Doesn't enter once.</div>
+                    </div>
+                    <div class="border border-gray-200 p-6 bg-white hover:border-black transition-colors">
+                        <div class="text-3xl mb-2">📉</div>
+                        <div class="font-bold text-black uppercase mb-1">Impermanent Loss</div>
+                        <div class="text-gray-400">Guaranteed. Just hold.</div>
+                    </div>
+                    <div class="border border-gray-200 p-6 bg-white hover:border-black transition-colors">
+                        <div class="text-3xl mb-2">📜</div>
+                        <div class="font-bold text-black uppercase mb-1">CertiK Audit</div>
+                        <div class="text-gray-400">Ignored their emails.</div>
+                    </div>
+                </div>
+            </section>
+
             <section id="smart-contract" class="scroll-mt-24">
-                <h2 class="text-2xl font-bold uppercase mb-8 border-b-2 border-black inline-block pb-1">03. Smart Contract</h2>
+                <h2 class="text-2xl font-bold uppercase mb-8 border-b-2 border-black inline-block pb-1">06. Smart Contract</h2>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4 font-mono text-xs mb-6">
                     <div class="border border-gray-300 p-5 bg-white">
                         <div class="opacity-50 mb-2">NETWORK</div>
-                        <div class="font-bold">SOLANA_MAINNET_BETA</div>
+                        <div class="font-bold text-black">SOLANA_MAINNET_BETA</div>
                     </div>
                     <div class="border border-gray-300 p-5 bg-white">
                         <div class="opacity-50 mb-2">CONTRACT_ADDRESS</div>
-                        <div class="font-bold">NULL_ADDRESS_PENDING</div>
+                        <div class="font-bold text-black">NULL_ADDRESS_PENDING</div>
                     </div>
                     <div class="border border-gray-300 p-5 bg-white">
                         <div class="opacity-50 mb-2">AUTHORITY_MINT</div>
@@ -258,19 +326,19 @@
                 </div>
             </section>
 
-            <section id="sandbox" class="scroll-mt-24 border-t-2 border-black pt-12">
+            <section id="sandbox" class="scroll-mt-24 border-t border-gray-200 pt-12">
                 <h2 class="text-2xl font-bold uppercase mb-6">Interactive Sandbox</h2>
                 <p class="text-sm font-mono text-gray-600 mb-6">Test the API logic locally in your browser before integrating.</p>
                 
                 <div class="border border-black bg-white p-6">
-                    <div class="flex gap-4 mb-4">
-                        <select id="method-select" class="border border-black p-2 font-mono text-xs outline-none focus:bg-gray-100">
+                    <div class="flex flex-col sm:flex-row gap-4 mb-4">
+                        <select id="method-select" class="border border-black p-2 font-mono text-xs outline-none focus:bg-gray-100 bg-white">
                             <option value="GET">GET /api/status</option>
                             <option value="POST">POST /api/trade</option>
                         </select>
-                        <button id="send-btn" class="bg-black text-white px-6 font-mono text-xs uppercase hover:bg-gray-800 transition-colors">Send Request</button>
+                        <button id="send-btn" class="bg-black text-white px-6 py-2 font-mono text-xs uppercase hover:bg-gray-800 transition-colors">Send Request</button>
                     </div>
-                    <div class="font-mono text-[10px] text-gray-400 mb-2 uppercase tracking-widest">Response Output:</div>
+                    <div class="font-mono text-[10px] text-gray-400 mb-2 uppercase tracking-widest mt-6">Response Output:</div>
                     <div id="sandbox-output" class="code-block min-h-[150px] flex items-center justify-center text-gray-600">
                         AWAITING_EXECUTION...
                     </div>
@@ -306,6 +374,8 @@
 
         sendBtn.addEventListener('click', () => {
             output.innerHTML = '<span class="animate-pulse">PROCESSING_REQUEST...</span>';
+            output.style.alignItems = "center";
+            output.style.justifyContent = "center";
             
             setTimeout(() => {
                 const method = methodSelect.value;
@@ -340,7 +410,6 @@
             let current = "";
             sections.forEach((section) => {
                 const sectionTop = section.offsetTop;
-                const sectionHeight = section.clientHeight;
                 if (pageYOffset >= sectionTop - 150) {
                     current = section.getAttribute("id");
                 }

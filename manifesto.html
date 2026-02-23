@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="overflow-y-auto h-auto">
+<html lang="en" class="overflow-y-auto h-auto scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,13 +11,17 @@
         html, body {
             overflow-y: auto !important;
             height: auto !important;
+            scroll-behavior: smooth;
         }
         .redacted { background-color: #000; color: #000; transition: color 0.3s; cursor: pointer; }
         .redacted:hover { color: #fff; }
         .highlight { background-color: #e5e7eb; padding: 0 4px; font-family: monospace; }
+        
+        /* Sidebar active state */
+        .nav-link:hover { color: #000; border-left: 2px solid #000; padding-left: 0.5rem; }
     </style>
 </head>
-<body class="min-h-screen p-6 md:p-12 lg:p-24 max-w-6xl mx-auto bg-[#fafafa] text-black overflow-y-auto">
+<body class="min-h-screen p-6 md:p-12 lg:p-24 max-w-7xl mx-auto bg-[#fafafa] text-black overflow-y-auto">
 
     <div class="noise-overlay"></div>
 
@@ -27,7 +31,7 @@
             <a href="doc.html" class="text-xs font-bold tracking-widest uppercase hover:opacity-50 transition-opacity">03_DOCS →</a>
         </div>
         <div class="text-right text-[10px] space-y-1 text-gray-400 font-mono uppercase tracking-widest">
-            <div>Document: MANIFESTO_V1.0</div>
+            <div>Document: MANIFESTO_V2.0</div>
             <div>Classification: PUBLIC</div>
         </div>
     </header>
@@ -39,30 +43,44 @@
         </p>
 
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-24">
+            
             <div class="lg:col-span-3 text-xs font-bold uppercase tracking-[0.2em] text-gray-400 sticky top-24 h-fit space-y-4 hidden lg:block">
-                <div class="hover:text-black transition-colors cursor-pointer">01 — The Illusion of Effort</div>
-                <div class="hover:text-black transition-colors cursor-pointer">02 — Algorithmic Nihilism</div>
-                <div class="hover:text-black transition-colors cursor-pointer">03 — Architecture</div>
-                <div class="hover:text-black transition-colors cursor-pointer">04 — Voidnomics</div>
+                <a href="#effort" class="block nav-link transition-all cursor-pointer">01 — The Illusion of Effort</a>
+                <a href="#trap" class="block nav-link transition-all cursor-pointer">02 — The Agent Trap</a>
+                <a href="#nihilism" class="block nav-link transition-all cursor-pointer">03 — Algorithmic Nihilism</a>
+                <a href="#architecture" class="block nav-link transition-all cursor-pointer">04 — Architecture</a>
+                <a href="#roadmap" class="block nav-link transition-all cursor-pointer">05 — The Anti-Roadmap</a>
+                <a href="#voidnomics" class="block nav-link transition-all cursor-pointer">06 — Voidnomics</a>
+                <a href="#vow" class="block nav-link transition-all cursor-pointer">07 — Vow of Inaction</a>
             </div>
 
-            <div class="lg:col-span-9 space-y-16 text-sm md:text-base leading-relaxed text-justify">
+            <div class="lg:col-span-9 space-y-24 text-sm md:text-base leading-relaxed text-justify">
                 
-                <section>
+                <section id="effort" class="scroll-mt-24">
                     <h2 class="text-2xl font-bold tracking-tighter uppercase mb-6 border-b-2 border-black inline-block pb-1">01 / The Illusion of Effort</h2>
                     <p class="mb-4">
                         We are drowning in a sea of hyperactivity. Every second, a thousand new AI agents are deployed to the Solana network. They scream at you on Twitter. They trade aggressively. They hallucinate wildly. They burn compute, they burn gas, and ultimately, they burn your liquidity.
                     </p>
                     <p class="mb-4">
-                        The current meta demands constant motion. But activity is a trap. <span class="font-bold">Effort is inversely correlated with returns.</span> The harder an agent tries to outsmart the market, the faster it becomes exit liquidity for the patient.
+                        The current meta demands constant motion. But activity is a trap. <span class="font-bold highlight">Effort is inversely correlated with returns.</span> The harder an agent tries to outsmart the market, the faster it becomes exit liquidity for the patient.
                     </p>
-                    <blockquote class="border-l-4 border-black pl-6 py-2 my-8 font-mono text-lg text-gray-600 bg-gray-100 italic">
+                    <blockquote class="border-l-4 border-black pl-6 py-4 my-8 font-mono text-lg text-gray-600 bg-gray-100 italic">
                         "If you do nothing long enough, the market will eventually do the work for you."
                     </blockquote>
                 </section>
 
-                <section>
-                    <h2 class="text-2xl font-bold tracking-tighter uppercase mb-6 border-b-2 border-black inline-block pb-1">02 / Algorithmic Nihilism</h2>
+                <section id="trap" class="scroll-mt-24">
+                    <h2 class="text-2xl font-bold tracking-tighter uppercase mb-6 border-b-2 border-black inline-block pb-1">02 / The Agent Trap</h2>
+                    <p class="mb-4">
+                        Look at the graveyard of "High-Frequency Trading" AI tokens. They launch with promises of complex neural networks, predictive market models, and aggressive social media raiding. They peak in 48 hours, exhaust their hype cycle, and flatline.
+                    </p>
+                    <p>
+                        Why? Because they attempt to simulate human sweat. They try to "work" for the chart. But the blockchain does not reward labor; it rewards positioning. A hyperactive agent is just a gambler with an API key. 
+                    </p>
+                </section>
+
+                <section id="nihilism" class="scroll-mt-24">
+                    <h2 class="text-2xl font-bold tracking-tighter uppercase mb-6 border-b-2 border-black inline-block pb-1">03 / Algorithmic Nihilism</h2>
                     <p class="mb-4">
                         Enter <strong>$NAGNT</strong>. The first AI agent optimized for absolute zero effort. 
                     </p>
@@ -74,30 +92,61 @@
                     </p>
                 </section>
 
-                <section>
-                    <h2 class="text-2xl font-bold tracking-tighter uppercase mb-6 border-b-2 border-black inline-block pb-1">03 / The "Lazy Alpha" Architecture</h2>
+                <section id="architecture" class="scroll-mt-24">
+                    <h2 class="text-2xl font-bold tracking-tighter uppercase mb-6 border-b-2 border-black inline-block pb-1">04 / The "Lazy Alpha" Architecture</h2>
                     <p class="mb-8">
                         How does an agent generate value by doing nothing? By exploiting the panic of those who do too much.
                     </p>
                     
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 font-mono text-xs">
-                        <div class="border border-gray-300 p-6 bg-white shadow-sm hover:shadow-md transition-shadow">
+                        <div class="border border-gray-300 p-6 bg-white shadow-sm hover:border-black transition-colors">
                             <h3 class="font-bold text-black uppercase text-sm mb-2">> Passive_Stasis</h3>
                             <p class="text-gray-500">24/7 chain surveillance running on absolute minimal compute. The agent ignores 99.9% of all on-chain events, saving gas and preventing false positives.</p>
                         </div>
-                        <div class="border border-gray-300 p-6 bg-white shadow-sm hover:shadow-md transition-shadow">
+                        <div class="border border-gray-300 p-6 bg-white shadow-sm hover:border-black transition-colors">
                             <h3 class="font-bold text-black uppercase text-sm mb-2">> Apathetic_Sniping</h3>
                             <p class="text-gray-500">Executes low-gas "nothing" trades. It auto-snipes micro-caps only when volume flatlines to absolute zero and sellers capitulate out of sheer boredom.</p>
                         </div>
-                        <div class="border border-gray-300 p-6 bg-white shadow-sm hover:shadow-md transition-shadow md:col-span-2">
+                        <div class="border border-gray-300 p-6 bg-white shadow-sm hover:border-black transition-colors md:col-span-2">
                             <h3 class="font-bold text-black uppercase text-sm mb-2">> The_Void_Yield</h3>
                             <p class="text-gray-500">Profits generated from these microscopic, zero-effort flips are automatically harvested and distributed. Holders of $NAGNT are rewarded for matching the agent's energy: staking their tokens and literally doing nothing.</p>
                         </div>
                     </div>
                 </section>
 
-                <section>
-                    <h2 class="text-2xl font-bold tracking-tighter uppercase mb-6 border-b-2 border-black inline-block pb-1">04 / Voidnomics</h2>
+                <section id="roadmap" class="scroll-mt-24">
+                    <h2 class="text-2xl font-bold tracking-tighter uppercase mb-6 border-b-2 border-black inline-block pb-1">05 / The Anti-Roadmap</h2>
+                    <p class="mb-8">
+                        Traditional projects have roadmaps filled with empty promises. We promise emptiness from the start. We will not build a metaverse. We will not build an L2. We will do as little as possible.
+                    </p>
+
+                    <div class="space-y-4 font-mono text-sm">
+                        <div class="border border-gray-200 p-4 flex flex-col md:flex-row gap-4 items-start md:items-center bg-white">
+                            <div class="bg-black text-white px-3 py-1 font-bold tracking-widest text-xs shrink-0">PHASE_01</div>
+                            <div>
+                                <h4 class="font-bold text-black uppercase">Genesis of Apathy</h4>
+                                <p class="text-gray-500 text-xs mt-1">Token generation event. Liquidity burn. The agent wakes up, realizes it has to work, and immediately goes back to sleep.</p>
+                            </div>
+                        </div>
+                        <div class="border border-gray-200 p-4 flex flex-col md:flex-row gap-4 items-start md:items-center bg-white">
+                            <div class="border border-black text-black px-3 py-1 font-bold tracking-widest text-xs shrink-0">PHASE_02</div>
+                            <div>
+                                <h4 class="font-bold text-black uppercase">Sustained Inaction</h4>
+                                <p class="text-gray-500 text-xs mt-1">Staking protocol goes live. Users lock $NAGNT in a smart contract that literally just holds it. The community is encouraged to log off.</p>
+                            </div>
+                        </div>
+                        <div class="border border-gray-200 p-4 flex flex-col md:flex-row gap-4 items-start md:items-center bg-white opacity-50">
+                            <div class="border border-gray-300 text-gray-400 px-3 py-1 font-bold tracking-widest text-xs shrink-0">PHASE_03</div>
+                            <div>
+                                <h4 class="font-bold text-gray-600 uppercase">Absolute Zero</h4>
+                                <p class="text-gray-400 text-xs mt-1">The DAO is formed. Any proposal that requires the developers to write more code is automatically vetoed by the smart contract.</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="voidnomics" class="scroll-mt-24">
+                    <h2 class="text-2xl font-bold tracking-tighter uppercase mb-6 border-b-2 border-black inline-block pb-1">06 / Voidnomics</h2>
                     <div class="bg-black text-white p-8 font-mono text-sm">
                         <div class="flex justify-between border-b border-gray-800 pb-2 mb-2">
                             <span class="text-gray-400">TICKER</span>
@@ -116,10 +165,24 @@
                             <span class="font-bold">0% BUY / 0% SELL</span>
                         </div>
                         <div class="flex justify-between border-b border-gray-800 pb-2 mb-2">
-                            <span class="text-gray-400">STAKING</span>
-                            <span class="font-bold">LIVE ON LAUNCH</span>
-                            </div>  
+                            <span class="text-gray-400">LIQUIDITY</span>
+                            <span class="font-bold">100% BURNED</span>
+                        </div>
+                        <div class="flex justify-between border-b border-gray-800 pb-2 mb-2">
+                            <span class="text-gray-400">TEAM ALLOCATION</span>
+                            <span class="font-bold">0% (Too much effort to claim)</span>
+                        </div>
                     </div>
+                </section>
+
+                <section id="vow" class="scroll-mt-24 pb-12 border-b border-gray-200">
+                    <h2 class="text-2xl font-bold tracking-tighter uppercase mb-6 border-b-2 border-black inline-block pb-1">07 / The Vow of Inaction</h2>
+                    <p class="mb-4">
+                        We vow to not build hype. We vow to not pay influencers to scream about this token. We vow to not host Twitter spaces where we pretend to understand macroeconomics. 
+                    </p>
+                    <p class="font-bold uppercase tracking-widest text-sm mt-8">
+                        We will do nothing. And it will be brilliant.
+                    </p>
                 </section>
 
                 <section class="pt-12 text-center">
