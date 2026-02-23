@@ -12,7 +12,8 @@
     <div class="noise-overlay"></div>
 
     <header class="flex justify-between items-start border-b border-gray-200 pb-4 mb-6 shrink-0 z-20 relative">
-        <div class="flex gap-6">
+        <div class="flex flex-col gap-2">
+            <div class="flex gap-6">
                 <a href="index.html" class="text-[9px] font-bold tracking-[0.2em] uppercase text-gray-400 hover:text-black transition-colors">
                     ← RETURN_TO_NULL
                 </a>
@@ -20,7 +21,8 @@
                     03_DOCS →
                 </a>
             </div>
-                <h1 class="text-2xl font-bold tracking-[-0.05em] uppercase text-black leading-none">Nothing Agent</h1>
+            <div>
+                <h1 class="text-2xl font-bold tracking-[-0.05em] uppercase text-black leading-none mt-2">Nothing Agent</h1>
                 <div class="text-[10px] text-gray-400 mt-2 tracking-widest uppercase">
                     Status: <span class="text-black font-bold">Neural Link Established</span>
                 </div>
@@ -35,11 +37,13 @@
 
     <main class="flex-grow grid grid-cols-1 lg:grid-cols-12 gap-12 overflow-hidden relative z-10 min-h-0">
 
-        <section class="lg:col-span-3 flex flex-col min-h-0 border-r border-gray-200 pr-4">
-            <div class="text-[9px] uppercase tracking-[0.2em] mb-4 text-gray-400 font-bold">Passive_Monitoring_Log</div>
-            <div id="data-stream" class="overflow-hidden font-mono text-[10px] leading-relaxed flex-grow relative text-gray-400">
-                <div class="absolute bottom-0 w-full h-24 bg-gradient-to-t from-[#fafafa] to-transparent pointer-events-none"></div>
-            </div>
+        <section class="lg:col-span-3 flex flex-col min-h-0 border-r border-gray-200 pr-4 relative">
+            <div class="text-[9px] uppercase tracking-[0.2em] mb-4 text-gray-400 font-bold shrink-0">Passive_Monitoring_Log</div>
+            
+            <div id="data-stream" class="overflow-hidden font-mono text-[10px] leading-relaxed flex-grow relative text-gray-400 flex flex-col-reverse justify-start">
+                </div>
+            
+            <div class="absolute bottom-0 left-0 w-full h-24 bg-gradient-to-t from-[#fafafa] to-transparent pointer-events-none"></div>
         </section>
 
         <section class="lg:col-span-6 relative flex flex-col min-h-0 items-center justify-center">
@@ -55,14 +59,13 @@
         </section>
 
         <section class="lg:col-span-3 flex flex-col min-h-0 border-l border-gray-200 pl-4">
-            <div class="text-[9px] uppercase tracking-[0.2em] mb-4 text-gray-400 font-bold">Input_Void</div>
+            <div class="text-[9px] uppercase tracking-[0.2em] mb-4 text-gray-400 font-bold shrink-0">Input_Void</div>
+            
             <div id="cli-output" class="flex-grow overflow-y-auto text-[10px] font-mono space-y-3 pb-2 text-gray-500">
-                <div>> Initializing apathy protocols...</div>
-                <div>> Type a command or ask the void a question.</div>
-                <br>
-            </div>
-            <div class="relative mt-2 shrink-0">
-                <span class="absolute left-0 top-2 text-black font-bold">></span>
+                </div>
+            
+            <div class="relative mt-2 shrink-0 border-t border-gray-200 pt-4">
+                <span class="absolute left-0 top-6 text-black font-bold">></span>
                 <input type="text" id="cli-input" class="w-full bg-transparent border-b border-gray-300 py-2 pl-4 outline-none text-xs font-bold uppercase placeholder-gray-300 focus:border-black transition-colors text-black" placeholder="DISTURB THE SILENCE..." autocomplete="off">
             </div>
         </section>
@@ -76,19 +79,77 @@
             document.getElementById('clock').innerText = now.toISOString().split('T')[1].split('.')[0];
         }, 1000);
 
-        // DATA STREAM
+        // --- CACHED DATA STREAM (LEFT PANEL) ---
         const streamContainer = document.getElementById('data-stream');
         const tasks = ['Scan_Complete: Found_Nothing', 'Opportunity: Ignored', 'Alpha: 0.0000', 'State: Dormant', 'Effort_Level: 0%'];
-        function addStreamLine() {
+        
+        // Load Stream History from Memory
+        let streamLogs = JSON.parse(localStorage.getItem('nagnt_stream')) || [];
+        streamLogs.forEach(log => {
             const div = document.createElement('div');
+            div.innerHTML = `<span class="opacity-30">${log.hash}</span> :: <span class="text-black">${log.task}</span>`;
+            streamContainer.prepend(div);
+        });
+
+        function addStreamLine() {
             const task = tasks[Math.floor(Math.random() * tasks.length)];
             const hash = Math.random().toString(36).substring(7);
+            
+            // Render to DOM
+            const div = document.createElement('div');
             div.innerHTML = `<span class="opacity-30">${hash}</span> :: <span class="text-black">${task}</span>`;
             streamContainer.prepend(div);
-            if(streamContainer.children.length > 20) streamContainer.lastElementChild.remove();
+            
+            // Save to Local Storage
+            streamLogs.push({hash, task});
+            if(streamLogs.length > 25) streamLogs.shift(); // Keep cache lightweight
+            localStorage.setItem('nagnt_stream', JSON.stringify(streamLogs));
+
+            if(streamContainer.children.length > 25) streamContainer.lastElementChild.remove();
+            
             setTimeout(addStreamLine, Math.random() * 2000 + 1000);
         }
         addStreamLine();
+
+        // --- CACHED COMMAND LINE (RIGHT PANEL) ---
+        const cliInput = document.getElementById('cli-input');
+        const cliOutput = document.getElementById('cli-output');
+        const statusMsg = document.getElementById('status-message');
+
+        const defaultChat = [
+            { text: "> Initializing apathy protocols...", type: "normal" },
+            { text: "> Type a command or ask the void a question.", type: "normal" }
+        ];
+
+        // Load Chat History from Memory
+        let chatLogs = JSON.parse(localStorage.getItem('nagnt_chat')) || defaultChat;
+
+        function renderDOM(text, type) {
+            const div = document.createElement('div');
+            div.innerHTML = type === 'user' 
+                ? `<span class="opacity-40">></span> <span class="text-black font-bold">${text}</span>` 
+                : `<span class="text-black">${text.replace(/\n/g, '<br>')}</span>`;
+            if(type === 'error') div.innerHTML = `<span class="text-red-500">${text}</span>`;
+            cliOutput.appendChild(div);
+            cliOutput.scrollTop = cliOutput.scrollHeight;
+        }
+
+        // Initial render of saved chat
+        chatLogs.forEach(log => renderDOM(log.text, log.type));
+
+        function printLog(text, type = 'normal') {
+            renderDOM(text, type);
+            // Save to memory
+            chatLogs.push({ text, type });
+            if (chatLogs.length > 50) chatLogs.shift(); // Prevent infinite history
+            localStorage.setItem('nagnt_chat', JSON.stringify(chatLogs));
+        }
+
+        const commands = {
+            '/help': "commands: /scan, /status, /clear, or chat.",
+            '/status': "Status: Ideally Idle.",
+            '/scan': "Scanning... Found nothing of value."
+        };
 
         // MINIMALIST CANVAS
         const canvas = document.getElementById('neuralCanvas');
@@ -139,25 +200,6 @@
         animate();
 
         // BACKEND CONNECTION
-        const cliInput = document.getElementById('cli-input');
-        const cliOutput = document.getElementById('cli-output');
-        const statusMsg = document.getElementById('status-message');
-
-        const commands = {
-            '/help': "commands: /scan (do nothing), /status, or chat.",
-            '/status': "Status: Ideally Idle.",
-            '/scan': "Scanning... Found nothing of value.",
-        };
-
-        function printLog(text, type = 'normal') {
-            const div = document.createElement('div');
-            div.innerHTML = type === 'user' 
-                ? `<span class="opacity-40">></span> <span class="text-black font-bold">${text}</span>` 
-                : `<span class="text-black">${text.replace(/\n/g, '<br>')}</span>`;
-            if(type === 'error') div.innerHTML = `<span class="text-red-500">${text}</span>`;
-            cliOutput.appendChild(div); cliOutput.scrollTop = cliOutput.scrollHeight;
-        }
-
         async function askGemini(promptText) {
             try {
                 const response = await fetch('/api/chat', {
@@ -175,8 +217,17 @@
             if (e.key === 'Enter') {
                 const input = cliInput.value.trim();
                 if (!input) return;
-                cliInput.value = ''; printLog(input, 'user');
+                cliInput.value = ''; 
+                printLog(input, 'user');
                 const lowerInput = input.toLowerCase();
+
+                // Clear Command
+                if (lowerInput === '/clear') {
+                    localStorage.removeItem('nagnt_chat');
+                    localStorage.removeItem('nagnt_stream');
+                    setTimeout(() => location.reload(), 200); // Quick refresh to wipe slate
+                    return;
+                }
 
                 if (commands[lowerInput]) {
                     setTimeout(() => { printLog(commands[lowerInput], 'system'); }, 300);
