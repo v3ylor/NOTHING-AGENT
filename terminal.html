@@ -6,6 +6,10 @@
     <title>NOTHING ($NAGNT) | TERMINAL</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="style.css">
+    <style>
+        .scrollbar-hide::-webkit-scrollbar { display: none; }
+        .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
 </head>
 <body class="flex flex-col p-6 h-screen w-screen bg-[#fafafa]">
 
@@ -38,12 +42,18 @@
     <main class="flex-grow grid grid-cols-1 lg:grid-cols-12 gap-12 overflow-hidden relative z-10 min-h-0">
 
         <section class="lg:col-span-3 flex flex-col min-h-0 border-r border-gray-200 pr-4 relative">
-            <div class="text-[9px] uppercase tracking-[0.2em] mb-4 text-gray-400 font-bold shrink-0">Passive_Monitoring_Log</div>
+            <div class="flex justify-between items-end border-b border-gray-100 pb-2 mb-4 shrink-0">
+                <span class="text-[9px] uppercase tracking-[0.2em] text-gray-400 font-bold">Live_Utility_Stream</span>
+                <div class="flex gap-1 items-center mb-1">
+                    <div class="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse"></div>
+                    <div class="w-1.5 h-1.5 bg-gray-300 rounded-full"></div>
+                </div>
+            </div>
             
-            <div id="data-stream" class="overflow-hidden font-mono text-[10px] leading-relaxed flex-grow relative text-gray-400 flex flex-col-reverse justify-start">
+            <div id="utility-stream" class="overflow-y-auto font-mono text-[10px] leading-relaxed flex-grow relative space-y-2 flex flex-col-reverse justify-start scrollbar-hide pb-12">
                 </div>
             
-            <div class="absolute bottom-0 left-0 w-full h-24 bg-gradient-to-t from-[#fafafa] to-transparent pointer-events-none"></div>
+            <div class="absolute bottom-0 left-0 w-full h-16 bg-gradient-to-t from-[#fafafa] to-transparent pointer-events-none"></div>
         </section>
 
         <section class="lg:col-span-6 relative flex flex-col min-h-0 items-center justify-center">
@@ -66,52 +76,75 @@
             
             <div class="relative mt-2 shrink-0 border-t border-gray-200 pt-4">
                 <span class="absolute left-0 top-6 text-black font-bold">></span>
-                <input type="text" id="cli-input" class="w-full bg-transparent border-b border-gray-300 py-2 pl-4 outline-none text-xs font-bold uppercase placeholder-gray-300 focus:border-black transition-colors text-black" placeholder="DISTURB THE SILENCE..." autocomplete="off">
+                <input type="text" id="cli-input" class="w-full bg-transparent border-b border-gray-300 py-2 pl-4 outline-none text-xs font-bold uppercase placeholder-gray-300 focus:border-black transition-colors text-black" placeholder="DISTURB THE SILENCE..." autocomplete="off" autofocus>
             </div>
         </section>
 
     </main>
 
     <script>
-        // CLOCK
+        // --- CLOCK ---
         setInterval(() => {
             const now = new Date();
             document.getElementById('clock').innerText = now.toISOString().split('T')[1].split('.')[0];
         }, 1000);
 
-        // --- CACHED DATA STREAM (LEFT PANEL) ---
-        const streamContainer = document.getElementById('data-stream');
-        const tasks = ['Scan_Complete: Found_Nothing', 'Opportunity: Ignored', 'Alpha: 0.0000', 'State: Dormant', 'Effort_Level: 0%'];
-        
-        // Load Stream History from Memory
-        let streamLogs = JSON.parse(localStorage.getItem('nagnt_stream')) || [];
+        // --- CACHED UTILITY STREAM LOGIC ---
+        const streamContainer = document.getElementById('utility-stream');
+        const tokens = ['$FARTCOIN', '$PUMP', '$TrenchWhale', '$HERO', '$WIF', '$BONK', 'Unknown_CA'];
+        const idleActions = [
+            "Analyzing mempool volume... requires too much effort. Ignored.",
+            "Filtering pump.fun noise.",
+            "Calculating lazy alpha... 0.00000. Perfect.",
+            "Watching devs dump. Doing absolutely nothing.",
+            "Maintaining Zen state. Gas is too high."
+        ];
+
+        // Load Utility Stream History from Memory
+        let streamLogs = JSON.parse(localStorage.getItem('nagnt_utility_stream')) || [];
         streamLogs.forEach(log => {
             const div = document.createElement('div');
-            div.innerHTML = `<span class="opacity-30">${log.hash}</span> :: <span class="text-black">${log.task}</span>`;
+            div.innerHTML = log.html;
+            if(log.isAction) div.className = "text-black bg-white border border-gray-200 p-1.5 mt-1 shadow-sm";
             streamContainer.prepend(div);
         });
 
         function addStreamLine() {
-            const task = tasks[Math.floor(Math.random() * tasks.length)];
-            const hash = Math.random().toString(36).substring(7);
-            
-            // Render to DOM
             const div = document.createElement('div');
-            div.innerHTML = `<span class="opacity-30">${hash}</span> :: <span class="text-black">${task}</span>`;
-            streamContainer.prepend(div);
-            
-            // Save to Local Storage
-            streamLogs.push({hash, task});
-            if(streamLogs.length > 25) streamLogs.shift(); // Keep cache lightweight
-            localStorage.setItem('nagnt_stream', JSON.stringify(streamLogs));
+            const isAction = Math.random() > 0.85; // 15% chance to do actual "work"
+            let token = tokens[Math.floor(Math.random() * tokens.length)];
+            let amt = (Math.random() * 0.015).toFixed(4);
+            let htmlContent = '';
 
+            if (isAction) {
+                if (Math.random() > 0.5) {
+                    htmlContent = `<span class="text-green-600 font-bold">[SNIPE]</span> Zero-effort dip detected on <span class="font-bold">${token}</span>. Auto-sniped. Gain: +${amt} SOL.`;
+                } else {
+                    htmlContent = `<span class="text-black font-bold">[REWARD]</span> Embracing chaos. Micro-gain of ${amt} SOL routed to $NAGNT stakers.`;
+                }
+                div.className = "text-black bg-white border border-gray-200 p-1.5 mt-1 shadow-sm";
+            } else {
+                htmlContent = `<span class="text-gray-400">> [MONITOR] ${idleActions[Math.floor(Math.random() * idleActions.length)]}</span>`;
+            }
+
+            div.innerHTML = htmlContent;
+            streamContainer.prepend(div);
+
+            // Save to Local Storage Cache
+            streamLogs.push({ html: htmlContent, isAction: isAction });
+            if(streamLogs.length > 25) streamLogs.shift(); // Keep cache lightweight (last 25 events)
+            localStorage.setItem('nagnt_utility_stream', JSON.stringify(streamLogs));
+
+            // Keep DOM lightweight
             if(streamContainer.children.length > 25) streamContainer.lastElementChild.remove();
             
-            setTimeout(addStreamLine, Math.random() * 2000 + 1000);
+            setTimeout(addStreamLine, Math.random() * 2500 + 1500);
         }
-        addStreamLine();
+        
+        // Start feeding logs
+        setTimeout(addStreamLine, 1000);
 
-        // --- CACHED COMMAND LINE (RIGHT PANEL) ---
+        // --- CACHED COMMAND LINE LOGIC ---
         const cliInput = document.getElementById('cli-input');
         const cliOutput = document.getElementById('cli-output');
         const statusMsg = document.getElementById('status-message');
@@ -121,7 +154,6 @@
             { text: "> Type a command or ask the void a question.", type: "normal" }
         ];
 
-        // Load Chat History from Memory
         let chatLogs = JSON.parse(localStorage.getItem('nagnt_chat')) || defaultChat;
 
         function renderDOM(text, type) {
@@ -134,14 +166,12 @@
             cliOutput.scrollTop = cliOutput.scrollHeight;
         }
 
-        // Initial render of saved chat
         chatLogs.forEach(log => renderDOM(log.text, log.type));
 
         function printLog(text, type = 'normal') {
             renderDOM(text, type);
-            // Save to memory
             chatLogs.push({ text, type });
-            if (chatLogs.length > 50) chatLogs.shift(); // Prevent infinite history
+            if (chatLogs.length > 50) chatLogs.shift(); 
             localStorage.setItem('nagnt_chat', JSON.stringify(chatLogs));
         }
 
@@ -151,7 +181,7 @@
             '/scan': "Scanning... Found nothing of value."
         };
 
-        // MINIMALIST CANVAS
+        // --- MINIMALIST CANVAS ---
         const canvas = document.getElementById('neuralCanvas');
         const ctx = canvas.getContext('2d');
         let width, height;
@@ -199,7 +229,7 @@
         }
         animate();
 
-        // BACKEND CONNECTION
+        // --- BACKEND CONNECTION ---
         async function askGemini(promptText) {
             try {
                 const response = await fetch('/api/chat', {
@@ -221,11 +251,11 @@
                 printLog(input, 'user');
                 const lowerInput = input.toLowerCase();
 
-                // Clear Command
+                // Modified Clear Command to wipe Utility cache as well
                 if (lowerInput === '/clear') {
                     localStorage.removeItem('nagnt_chat');
-                    localStorage.removeItem('nagnt_stream');
-                    setTimeout(() => location.reload(), 200); // Quick refresh to wipe slate
+                    localStorage.removeItem('nagnt_utility_stream');
+                    setTimeout(() => location.reload(), 200);
                     return;
                 }
 

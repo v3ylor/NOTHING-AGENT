@@ -66,9 +66,7 @@
                     </div>
                     
                     <div id="live-utility-feed" class="text-[9px] md:text-[10px] text-black font-mono leading-relaxed space-y-1.5 overflow-y-auto flex-grow scrollbar-hide">
-                        <div class="text-gray-400">> Booting apathy engine...</div>
-                        <div class="text-gray-400">> Monitoring Solana mempool...</div>
-                    </div>
+                        </div>
                 </div>
 
             </div>
@@ -107,7 +105,12 @@
                         <span class="group-hover:translate-x-1 transition-transform">→</span>
                     </span>
                 </a>
-                
+                <a href="https://github.com/your-fake-repo/nagnt-core-agent" target="_blank" class="block border border-black p-3 hover:bg-black hover:text-white transition-all duration-300 cursor-pointer group border-t-0">
+                    <span class="text-[10px] uppercase tracking-widest font-bold flex justify-between items-center">
+                        <span>> 06_GitHub_Repo</span>
+                        <span class="group-hover:translate-x-1 transition-transform">→</span>
+                    </span>
+                </a>
                 </div>
         </section>
 
@@ -196,7 +199,7 @@
             setTimeout(() => { resize(); animate(); }, 100);
         }
 
-        // --- LIVE UTILITY FEED (SNIPER & REWARDS SIMULATION) ---
+        // --- CACHED LIVE UTILITY FEED ---
         const utilityFeed = document.getElementById('live-utility-feed');
         const tokens = ['$FARTCOIN', '$PUMP', '$TrenchWhale', '$HERO', '$WIF', '$BONK', 'Unknown_CA'];
         const idleActions = [
@@ -207,38 +210,56 @@
             "Maintaining Zen state. Gas is too high."
         ];
 
+        // 1. Load from cache OR use default booting messages
+        let homeStreamLogs = JSON.parse(localStorage.getItem('nagnt_home_stream')) || [
+            { html: '<span class="text-gray-400">> Booting apathy engine...</span>', isAction: false },
+            { html: '<span class="text-gray-400">> Monitoring Solana mempool...</span>', isAction: false }
+        ];
+
+        // 2. Render initial cache to DOM
+        homeStreamLogs.forEach(log => {
+            const div = document.createElement('div');
+            div.innerHTML = log.html;
+            if(log.isAction) div.className = "text-black bg-gray-50 border border-gray-100 p-1 mt-1 mb-1";
+            utilityFeed.appendChild(div);
+        });
+        utilityFeed.scrollTop = utilityFeed.scrollHeight;
+
         function pushUtilityLog() {
             const div = document.createElement('div');
-            const isSnipe = Math.random() > 0.8; // 20% chance to do actual "work"
+            const isSnipe = Math.random() > 0.8; 
             let token = tokens[Math.floor(Math.random() * tokens.length)];
             let amt = (Math.random() * 0.015).toFixed(4);
+            let htmlContent = '';
 
             if (isSnipe) {
-                // Determine if it's a snipe log or a reward log
                 if (Math.random() > 0.5) {
-                    div.innerHTML = `<span class="text-green-600 font-bold">[SNIPE]</span> Zero-effort dip detected on <span class="font-bold">${token}</span>. Auto-sniped. Gain: +${amt} SOL.`;
+                    htmlContent = `<span class="text-green-600 font-bold">[SNIPE]</span> Zero-effort dip detected on <span class="font-bold">${token}</span>. Auto-sniped. Gain: +${amt} SOL.`;
                 } else {
-                    div.innerHTML = `<span class="text-black font-bold">[REWARD]</span> Embracing chaos. Micro-gain of ${amt} SOL routed to $NAGNT stakers.`;
+                    htmlContent = `<span class="text-black font-bold">[REWARD]</span> Embracing chaos. Micro-gain of ${amt} SOL routed to $NAGNT stakers.`;
                 }
                 div.className = "text-black bg-gray-50 border border-gray-100 p-1 mt-1 mb-1";
             } else {
-                div.innerHTML = `<span class="text-gray-400">> [MONITOR] ${idleActions[Math.floor(Math.random() * idleActions.length)]}</span>`;
+                htmlContent = `<span class="text-gray-400">> [MONITOR] ${idleActions[Math.floor(Math.random() * idleActions.length)]}</span>`;
             }
-
+            
+            div.innerHTML = htmlContent;
             utilityFeed.appendChild(div);
             
-            // Keep the log clean (remove oldest items)
+            // 3. Save to cache
+            homeStreamLogs.push({ html: htmlContent, isAction: isSnipe });
+            if (homeStreamLogs.length > 5) homeStreamLogs.shift(); // Keep max 5 lines
+            localStorage.setItem('nagnt_home_stream', JSON.stringify(homeStreamLogs));
+
+            // Keep DOM clean
             if(utilityFeed.children.length > 5) {
                 utilityFeed.removeChild(utilityFeed.firstChild);
             }
-            // Auto-scroll to bottom
             utilityFeed.scrollTop = utilityFeed.scrollHeight;
 
-            // Randomize update times (1.5 to 4 seconds)
             setTimeout(pushUtilityLog, Math.random() * 2500 + 1500);
         }
         
-        // Start the utility feed shortly after load
         setTimeout(pushUtilityLog, 2000);
 
         // --- SYSTEM METRICS ---
